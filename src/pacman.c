@@ -5,12 +5,13 @@
 // Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
 // TODO: criar mais teclas de controle, como [r]einiciar, [s]air, etc.
 char move();
-// void renderGrid();
+void renderGrid(char[][4]);
 // void makeMove();
 // void checkWin();
 
 char *main(void) {
-    // renderGrid();
+    char mapa[4][4] = {{'#', '#', '#', '#'}, {'#', 'C', '.', '#',}, {'#', '.', '.', '#',}, {'#', '#', '#', '#'}};
+    renderGrid(mapa);
 
     // Loop principal do jogo. É interessante manter o menor número possível de funções nesse loop, mas dá pra mudar
     while (1)
@@ -78,10 +79,11 @@ char move()
     return output;
 }
 
-// void renderGrid()
-// {
-//     // TODO
-// }
+void renderGrid(char map[][4])
+{
+    printf("size is %i\n", sizeof(map));
+    printf("size of first element is %i\n", sizeof(map[0])); // CONTINUE
+}
 
 // void makeMove()
 // {
