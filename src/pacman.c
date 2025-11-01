@@ -16,23 +16,7 @@ char *main(void) {
     // Loop principal do jogo. É interessante manter o menor número possível de funções nesse loop, mas dá pra mudar
     while (1)
     {
-        char test = move();
-        if (test == 'u')
-        {
-            printf("Up!\n");
-        }
-        else if (test == 'd')
-        {
-            printf("Down!\n");
-        }
-        else if (test == 'l')
-        {
-            printf("Left!\n");
-        }
-        else
-        {
-            printf("Right!\n");
-        }
+        
         
         // makeMove();
         // renderGrid();
