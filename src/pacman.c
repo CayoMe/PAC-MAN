@@ -1,44 +1,43 @@
 #include <stdio.h>
 #include <conio.h> // Biblioteca para receber as setas como entrada do usuário
 
-// Retorna um char representando a seta que o jogador apertou no formato 'u' (up), 'd' (down), 'l' (left), 'r' (right)
-// Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
-// TODO: criar mais teclas de controle, como [r]einiciar, [s]air, etc.
+// PROTÓTIPOS ----------------------------
+
 char move();
-// void renderGrid();
+void renderGrid(int rows, int cols, char[rows][cols]);
 // void makeMove();
 // void checkWin();
 
+char mapa[4][4] = {{'#', '#', '#', '#'}, {'#', '.', '.', '#',}, {'#', '.', '.', '#',}, {'#', '#', '#', '#'}};
+
+struct Pacman
+{
+    // TODO
+};
+
+struct Fantasma
+{
+    // TODO
+};
+
 char *main(void) {
-    // renderGrid();
+    renderGrid(4, 4, mapa);
 
     // Loop principal do jogo. É interessante manter o menor número possível de funções nesse loop, mas dá pra mudar
     while (1)
     {
-        char test = move();
-        if (test == 'u')
-        {
-            printf("Up!\n");
-        }
-        else if (test == 'd')
-        {
-            printf("Down!\n");
-        }
-        else if (test == 'l')
-        {
-            printf("Left!\n");
-        }
-        else
-        {
-            printf("Right!\n");
-        }
-        
         // makeMove();
         // renderGrid();
         // checkWin();
     }
+
+    return "🥴";
 }
 
+// FUNÇÕES ----------------------------
+
+// Retorna um char representando a seta que o jogador apertou no formato 'u' (up), 'd' (down), 'l' (left), 'r' (right)
+// Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
 char move()
 {
     char output;
@@ -51,7 +50,7 @@ char move()
         {
             input = getch(); // Ela tem que ser chamada duas vezes pra alguns tipos de teclas, como as setinhas
 
-            switch (input)
+            switch (input) // TODO: criar mais teclas de controle, como [r]einiciar, [s]air, etc.
             {
             case 72:
                 output = 'u';
@@ -78,10 +77,18 @@ char move()
     return output;
 }
 
-// void renderGrid()
-// {
-//     // TODO
-// }
+void renderGrid(int rows, int cols, char map[rows][cols])
+{
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            printf("%c", map[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 
 // void makeMove()
 // {
