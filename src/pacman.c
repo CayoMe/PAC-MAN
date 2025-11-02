@@ -111,7 +111,7 @@ void renderGrid(int rows, int cols, char map[rows][cols], Player player)
     }
 }
 
-// TODO: apagar os espaços que o Pacman passou
+// TODO: contabilizar pontos quando o pacman se move para uma casa onde havia uma bolinha
 void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
 {
     char proxMov;
@@ -145,6 +145,8 @@ void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
         }
         else
         {
+            // Esvaziando o local atual do jogador e movendo- o para o próximo
+            mapa[pacY][pacX] = ' ';
             mapa[pacY + deltaY][pacX + deltaX] = 'C'; // Tecnicamente quem escreve o C é a renderGrid, mas eu tô com medo de tirar 😅
 
             // Atualizando as coordenadas do jogador para as novas
