@@ -2,11 +2,14 @@
 #include <conio.h> // Biblioteca para receber as setas como entrada do usuário
 #include <stdlib.h>
 
-char mapa[5][5] = {{'#', '#', '#', '#', '#'}, // Infelizmente por enquanto o tamanho dos mapas vai ter que ser declarado em toda variável
-                   {'#', '.', '#', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
-                   {'#', '.', '.', '.', '#'},
-                   {'#', '.', '.', '.', '#'},
-                   {'#', '#', '#', '#', '#'}};
+#define ROWS 6
+#define COLS 6
+
+char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#'}, // Infelizmente por enquanto o tamanho dos mapas vai ter que ser declarado em toda variável
+                         {'#', '.', '.', '.', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
+                         {'#', '.', '.', '.', '.', '#'},
+                         {'#', '.', '.', '.', '.', '#'},
+                         {'#', '#', '#', '#', '#', '#'}};
 
 
 // STRUCTS ------------------------------
@@ -30,21 +33,35 @@ typedef struct Fantasma
 char getInput();
 void renderGrid(int rows, int cols, char[rows][cols], Player, Fantasma);
 void makeMove(Player*, int rows, int cols, char mapa[rows][cols]);
-// void makeMove();
 // void checkWin();
+
+void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
+{
+    int posX = fan->posX; int posY = fan->posY;
+    int velX = fan->Xvel; int velY = fan->Yvel;
+    
+    char futurePos = mapa[posY + velY][posX + velX];
+    
+    mapa[posY][posX] = fan->objAbaixo;
+    mapa[posY + velY][posX + velX] = fan->skin;
+
+    fan->posX = posX + velX;
+    fan->posY = posY + velY;
+}
 
 char *main(void) {
     // Inicializando player e fantasmas
     Player p1 = {1, 1};
-    Fantasma f1 = {'F', 1, 3, 0, 0, '.'};
+    Fantasma f1 = {'F', 1, 3, 1, 0, '.'};
 
-    renderGrid(5, 5, mapa, p1, f1);
+    renderGrid(ROWS, COLS, mapa, p1, f1);
 
     // Loop principal do jogo
     while (1)
     {
-        makeMove(&p1, 5, 5, mapa);
-        renderGrid(5, 5, mapa, p1, f1);
+        makeMove(&p1, ROWS, COLS, mapa);
+        moverFantasma(&f1, ROWS, COLS, mapa);
+        renderGrid(ROWS, COLS, mapa, p1, f1);
     }
 
     return "🥴";
