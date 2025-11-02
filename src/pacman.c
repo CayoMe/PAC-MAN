@@ -2,46 +2,49 @@
 #include <conio.h> // Biblioteca para receber as setas como entrada do usuário
 #include <stdlib.h>
 
-
 char mapa[5][5] = {{'#', '#', '#', '#', '#'}, // Infelizmente por enquanto o tamanho dos mapas vai ter que ser declarado em toda variável
-                   {'#', '.', '.', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
+                   {'#', '.', '#', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
                    {'#', '.', '.', '.', '#'},
                    {'#', '.', '.', '.', '#'},
                    {'#', '#', '#', '#', '#'}};
 
+
 // STRUCTS ------------------------------
 
-typedef struct // Talvez seria interessante fazer uma estrutura "Entidade" que possa ser o Pacman e o fantasma?
+typedef struct Player // Talvez seria interessante fazer uma estrutura "Entidade" que possa ser o Pacman e o fantasma?
 {
     int posX, posY;
 } Player;
 
-typedef struct
+typedef struct Fantasma
 {
+    char skin;
     int posX, posY;
     int Xvel, Yvel;
+    char objAbaixo; // Esta variável serve para guardar o que estava presente na célula que o fantasma se mover, pra que ele não apague as bolinhas ou itens
 } Fantasma;
+
 
 // PROTÓTIPOS ---------------------------
 
 char getInput();
-void renderGrid(int rows, int cols, char[rows][cols], Player);
+void renderGrid(int rows, int cols, char[rows][cols], Player, Fantasma);
 void makeMove(Player*, int rows, int cols, char mapa[rows][cols]);
 // void makeMove();
 // void checkWin();
 
-
 char *main(void) {
-    Player p1;
-    p1.posX = 1; p1.posY = 1; // Colocando o player na coordenada (1, 1)
+    // Inicializando player e fantasmas
+    Player p1 = {1, 1};
+    Fantasma f1 = {'F', 1, 3, 0, 0, '.'};
 
-    renderGrid(5, 5, mapa, p1);
+    renderGrid(5, 5, mapa, p1, f1);
 
     // Loop principal do jogo
     while (1)
     {
         makeMove(&p1, 5, 5, mapa);
-        renderGrid(5, 5, mapa, p1);
+        renderGrid(5, 5, mapa, p1, f1);
     }
 
     return "🥴";
@@ -94,12 +97,13 @@ char getInput()
     return output;
 }
 
-void renderGrid(int rows, int cols, char map[rows][cols], Player player)
+void renderGrid(int rows, int cols, char map[rows][cols], Player player, Fantasma f1)
 {
     system("cls");
 
-    // Colocando o Pacman na sua coordenada
+    // Posicionando o jogador e os fantasmas
     map[player.posY][player.posX] = 'C';
+    map[f1.posY][f1.posX] = f1.skin;
 
     for (int i = 0; i < rows; i++)
     {
@@ -138,11 +142,16 @@ void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
             break;
         }
 
-        // Verificando se o movimento é válido
+        // Verificando a validade do movimento (parede => nada acontece; fantasma => jogo encerra)
         if (mapa[pacY + deltaY][pacX + deltaX] == '#')
         {
             printf("vc acertaria uma parede\n");
         }
+        else if (mapa[pacY + deltaY][pacX + deltaX] == 'F') // TODO: printar uma mensagem de game over
+        {
+            exit(0);
+        }
+        
         else
         {
             // Esvaziando o local atual do jogador e movendo- o para o próximo
