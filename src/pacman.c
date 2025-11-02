@@ -41,12 +41,19 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
     int velX = fan->Xvel; int velY = fan->Yvel;
     
     char futurePos = mapa[posY + velY][posX + velX];
-    
-    mapa[posY][posX] = fan->objAbaixo;
-    mapa[posY + velY][posX + velX] = fan->skin;
 
-    fan->posX = posX + velX;
-    fan->posY = posY + velY;
+    if (futurePos == '#')
+    {
+        // TODO: mudar a velocidade do fantasma pra que no próximo turno ele não bata na parede
+    }
+    else
+    {
+        mapa[posY][posX] = fan->objAbaixo;
+        mapa[posY + velY][posX + velX] = fan->skin;
+    
+        fan->posX = posX + velX;
+        fan->posY = posY + velY;
+    }
 }
 
 char *main(void) {
