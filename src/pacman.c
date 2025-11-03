@@ -5,11 +5,20 @@
 #define ROWS 6
 #define COLS 6
 
+
+
+
+// Mapa do Jueguitos ------------------------------
+
 char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#'}, // Infelizmente por enquanto o tamanho dos mapas vai ter que ser declarado em toda variável
                          {'#', '.', '.', '.', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
                          {'#', '.', '.', '.', '.', '#'},
                          {'#', '.', '.', '.', '.', '#'},
                          {'#', '#', '#', '#', '#', '#'}};
+
+
+
+
 
 
 // STRUCTS ------------------------------
@@ -28,6 +37,10 @@ typedef struct Fantasma
 } Fantasma;
 
 
+
+
+
+
 // PROTÓTIPOS ---------------------------
 
 char getInput();
@@ -44,7 +57,9 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
 
     if (futurePos == '#')
     {
-        // TODO: mudar a velocidade do fantasma pra que no próximo turno ele não bata na parede
+        // -Cayo: pô eu vou fazer ele inverter a direção do fantasma quando ele bater na parede
+        fan->Xvel = -(fan->Xvel);
+        fan->Yvel = -(fan->Yvel);
     }
     else
     {
@@ -56,7 +71,11 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
     }
 }
 
-char *main(void) {
+
+
+// MAIN do códiguinho ---------------------------
+
+char main(void) {
     // Inicializando player e fantasmas
     Player p1 = {1, 1};
     Fantasma f1 = {'F', 1, 3, 1, 0, '.'};
@@ -73,6 +92,10 @@ char *main(void) {
 
     return "🥴";
 }
+
+
+
+
 
 // FUNÇÕES ----------------------------
 
@@ -139,6 +162,8 @@ void renderGrid(int rows, int cols, char map[rows][cols], Player player, Fantasm
     }
 }
 
+int pontos = 0; // -Cayo: Uma pontuação 
+
 // TODO: contabilizar pontos quando o pacman se move para uma casa onde havia uma bolinha
 void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
 {
@@ -171,14 +196,20 @@ void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
         {
             printf("vc acertaria uma parede\n");
         }
-        else if (mapa[pacY + deltaY][pacX + deltaX] == 'F') // TODO: printar uma mensagem de game over
+        else if (mapa[pacY + deltaY][pacX + deltaX] == 'F')
         {
+            printf("Game Over!!\n");
             exit(0);
         }
         
         else
         {
-            // Esvaziando o local atual do jogador e movendo- o para o próximo
+            // -Cayo: caso ele comer uma bolinha, a gente soma um ponto
+            if (mapa[pacY + deltaY][pacX + deltaX] == '.') {
+                pontos++;
+            }
+
+            // Esvaziando o local atual do jogador e movendo-o para o próximo
             mapa[pacY][pacX] = ' ';
             mapa[pacY + deltaY][pacX + deltaX] = 'C'; // Tecnicamente quem escreve o C é a renderGrid, mas eu tô com medo de tirar 😅
 
