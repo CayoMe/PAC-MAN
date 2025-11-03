@@ -75,7 +75,7 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
 
 // MAIN do códiguinho ---------------------------
 
-char main(void) {
+char* main(void) {
     // Inicializando player e fantasmas
     Player p1 = {1, 1};
     Fantasma f1 = {'F', 1, 3, 1, 0, '.'};
