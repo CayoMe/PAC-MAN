@@ -50,7 +50,7 @@ void makeMove(Player*, int rows, int cols, char mapa[rows][cols]);
 // void checkWin();
 
 // Muda a direção para a qual o fantasma está andando
-int newDirection(Fantasma* fan, char mapa[ROWS][COLS])
+int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
 {
     // Loop só encerrará quando a nova velocidade não fizer o fantasma andar contra uma parede
     while (1)
@@ -98,9 +98,9 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char mapa[ROWS][COLS])
 
     if (futurePos == '#')
     {
-        newDirection(fan, mapa);
+        changeDirection(fan, mapa);
     }
-    else
+    else // TODO: fantasma gasta um turno pra mudar de direção. Imagino que seja por conta desse else, mas tentei movê-lo pra fora e não deu muito certo. Resolver!
     {
         mapa[posY][posX] = fan->objAbaixo;
         mapa[posY + velY][posX + velX] = fan->skin;
