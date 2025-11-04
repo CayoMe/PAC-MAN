@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <conio.h> // Biblioteca para receber as setas como entrada do usuário
+#include <conio.h>   // Para receber as setas como entrada do usuário
 #include <stdlib.h>
+#include <time.h>    // Para gerar seed da função rand()
 
 #define ROWS 6
 #define COLS 6
@@ -48,7 +49,47 @@ void renderGrid(int rows, int cols, char[rows][cols], Player, Fantasma);
 void makeMove(Player*, int rows, int cols, char mapa[rows][cols]);
 // void checkWin();
 
-void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
+// Muda a direção para a qual o fantasma está andando
+int newDirection(Fantasma* fan, char mapa[ROWS][COLS])
+{
+    // Loop só encerrará quando a nova velocidade não fizer o fantasma andar contra uma parede
+    while (1)
+    {
+        srand(time(NULL));
+    
+        int n = rand() % 3;
+    
+        if (n == 0) // Fantasma anda pra direção oposta
+        {
+            fan->Xvel *= -1;
+            fan->Yvel *= -1;
+
+            break;
+        }
+        else
+        {
+            // Fantasma andará perpendicularmente para um lado...
+            int aux = fan->Xvel;
+    
+            fan->Xvel = fan->Yvel;
+            fan->Yvel = aux;
+    
+            if (n == 2) // ... ou para o outro
+            {
+                fan->Xvel *= -1;
+                fan->Yvel *= -1;
+            }
+        }
+
+        // Encerra o loop caso a nova posição não seja uma parede
+        if (mapa[fan->posY + fan->Yvel][fan->posX + fan->Xvel] != '#')
+        {
+            break;
+        }
+    }
+}
+
+void moverFantasma(Fantasma *fan, int rows, int cols, char mapa[ROWS][COLS])
 {
     int posX = fan->posX; int posY = fan->posY;
     int velX = fan->Xvel; int velY = fan->Yvel;
@@ -57,9 +98,7 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char[rows][cols])
 
     if (futurePos == '#')
     {
-        // -Cayo: pô eu vou fazer ele inverter a direção do fantasma quando ele bater na parede
-        fan->Xvel = -(fan->Xvel);
-        fan->Yvel = -(fan->Yvel);
+        newDirection(fan, mapa);
     }
     else
     {
