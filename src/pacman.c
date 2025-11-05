@@ -62,6 +62,8 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
 }
 
 // Muda a direção para a qual o fantasma está andando
+// kris: Eu prevejo que essa função não vai funcionar adequadamente caso um fantasma entre num beco sem saída.
+// kris: Por enquanto, deixemos assim, MAS... se der merda, é só adicionar uma condição que conta quantos # tem em volta do fantasma, se for 3, ele vira pra trás
 int mudarDirecao(Fantasma* fan, char fm[ROWS][COLS])
 {
     srand(time(NULL));
@@ -85,12 +87,13 @@ int mudarDirecao(Fantasma* fan, char fm[ROWS][COLS])
         {
             fan->xVel *= -1;
             fan->yVel *= -1;
+        }
 
-            if(fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] == '#')
-            {
-                fan->xVel *= -1;
-                fan->yVel *= -1;
-            }
+        // Verifica se a próxima posição é valida ou não. Se não for, inverte
+        if(fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] != ' ')
+        {
+            fan->xVel *= -1;
+            fan->yVel *= -1;
         }
     }
 }
@@ -109,7 +112,7 @@ void moverFantasma(Fantasma *fan, char fm[ROWS][COLS])
     int xAhead = fan->xPos + fan->xVel;
     int yAhead = fan->yPos + fan->yVel;
     
-    if (fm[yAhead][xAhead] == '#')
+    if (fm[yAhead][xAhead] != ' ')
     {
         mudarDirecao(fan, fm);
     }
@@ -212,12 +215,17 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                 printf("%c", fm[i][j]);
             }
         }
+        printf("|");                   // DEBUG 02
+        for (int k = 0; k < COLS; k++) // DEBUG 02
+        {                              // DEBUG 02
+            printf("%c", fm[i][k]);    // DEBUG 02
+        }                              // DEBUG 02
         printf("\n");
     }
 
-    int xAhead = f1.xPos + f1.xVel; int yAhead = f1.yPos + f1.yVel; // DONKEY
-    printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead); // DONKEY
-    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel, fm[yAhead][xAhead]); // DONKEY
+    int xAhead = f1.xPos + f1.xVel; int yAhead = f1.yPos + f1.yVel;                                                            // DEBUG 01
+    printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
+    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
 
 int pontos = 0; // -Cayo: Uma pontuação 
