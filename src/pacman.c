@@ -26,13 +26,13 @@ char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#'}, // Infelizmente por enq
 
 typedef struct Player // Talvez seria interessante fazer uma estrutura "Entidade" que possa ser o Pacman e o fantasma?
 {
-    int posX, posY;
+    int xPos, yPos;
 } Player;
 
 typedef struct Fantasma
 {
     char skin;
-    int posX, posY;
+    int xPos, yPos;
     int Xvel, Yvel;
     char objAbaixo; // Esta variável serve para guardar o que estava presente na célula que o fantasma se mover, pra que ele não apague as bolinhas ou itens
 } Fantasma;
@@ -74,7 +74,7 @@ int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
             fan->Xvel *= -1;
             fan->Yvel *= -1;
 
-            if(mapa[fan->posY + fan->Yvel][fan->posX + fan->Xvel] == '#')
+            if(mapa[fan->yPos + fan->Yvel][fan->xPos + fan->Xvel] == '#')
             {
                 fan->Xvel *= -1;
                 fan->Yvel *= -1;
@@ -85,10 +85,10 @@ int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
 
 void moverFantasma(Fantasma *fan, int rows, int cols, char mapa[ROWS][COLS])
 {
-    int posX = fan->posX; int posY = fan->posY;
-    int velX = fan->Xvel; int velY = fan->Yvel;
+    int xPos = fan->xPos; int yPos = fan->yPos;
+    int xVel = fan->Xvel; int yVel = fan->Yvel;
     
-    char futurePos = mapa[posY + velY][posX + velX];
+    char futurePos = mapa[yPos + yVel][xPos + xVel];
 
     if (futurePos == '#')
     {
@@ -96,11 +96,11 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char mapa[ROWS][COLS])
     }
     else // TODO: fantasma gasta um turno pra mudar de direção. Imagino que seja por conta desse else, mas tentei movê-lo pra fora e não deu muito certo. Resolver!
     {
-        mapa[posY][posX] = fan->objAbaixo;
-        mapa[posY + velY][posX + velX] = fan->skin;
+        mapa[yPos][xPos] = fan->objAbaixo;
+        mapa[yPos + yVel][xPos + xVel] = fan->skin;
     
-        fan->posX = posX + velX;
-        fan->posY = posY + velY;
+        fan->xPos = xPos + xVel;
+        fan->yPos = yPos + yVel;
     }
 }
 
@@ -182,8 +182,8 @@ void renderGrid(int rows, int cols, char map[rows][cols], Player player, Fantasm
     system("cls");
 
     // Posicionando o jogador e os fantasmas
-    map[player.posY][player.posX] = 'C';
-    map[f1.posY][f1.posX] = f1.skin;
+    map[player.yPos][player.xPos] = 'C';
+    map[f1.yPos][f1.xPos] = f1.skin;
 
     for (int i = 0; i < rows; i++)
     {
@@ -201,8 +201,8 @@ int pontos = 0; // -Cayo: Uma pontuação
 void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
 {
     char proxMov;
-    int pacX = pacman->posX;
-    int pacY = pacman->posY;
+    int pacX = pacman->xPos;
+    int pacY = pacman->yPos;
 
     while (1)
     {
@@ -247,8 +247,8 @@ void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
             mapa[pacY + deltaY][pacX + deltaX] = 'C'; // Tecnicamente quem escreve o C é a renderGrid, mas eu tô com medo de tirar 😅
 
             // Atualizando as coordenadas do jogador para as novas
-            pacman->posX += deltaX;
-            pacman->posY += deltaY;
+            pacman->xPos += deltaX;
+            pacman->yPos += deltaY;
             break;
         }
     }
