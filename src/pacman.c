@@ -33,7 +33,7 @@ typedef struct Fantasma
 {
     char skin;
     int xPos, yPos;
-    int Xvel, Yvel;
+    int xVel, yVel;
     char objAbaixo; // Esta variável serve para guardar o que estava presente na célula que o fantasma se mover, pra que ele não apague as bolinhas ou itens
 } Fantasma;
 
@@ -46,7 +46,7 @@ typedef struct Fantasma
 
 char getInput();
 void renderGrid(int rows, int cols, char[rows][cols], Player, Fantasma);
-void makeMove(Player*, int rows, int cols, char mapa[rows][cols]);
+void moverJogador(Player*, int rows, int cols, char mapa[rows][cols]);
 // void checkWin();
 
 // Muda a direção para a qual o fantasma está andando
@@ -58,46 +58,53 @@ int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
 
     if (n == 0) // Fantasma anda pra direção oposta
     {
-        fan->Xvel *= -1;
-        fan->Yvel *= -1;
+        fan->xVel *= -1;
+        fan->yVel *= -1;
     }
     else
     {
         // Fantasma andará perpendicularmente para um lado...
-        int aux = fan->Xvel;
+        int aux = fan->xVel;
 
-        fan->Xvel = fan->Yvel;
-        fan->Yvel = aux;
+        fan->xVel = fan->yVel;
+        fan->yVel = aux;
 
         if (n == 2) // ... ou para o outro
         {
-            fan->Xvel *= -1;
-            fan->Yvel *= -1;
+            fan->xVel *= -1;
+            fan->yVel *= -1;
 
-            if(mapa[fan->yPos + fan->Yvel][fan->xPos + fan->Xvel] == '#')
+            if(mapa[fan->yPos + fan->yVel][fan->xPos + fan->xVel] == '#')
             {
-                fan->Xvel *= -1;
-                fan->Yvel *= -1;
+                fan->xVel *= -1;
+                fan->yVel *= -1;
             }
         }
     }
 }
 
-void moverFantasma(Fantasma *fan, int rows, int cols, char mapa[ROWS][COLS])
+void moverFantasma(Fantasma *fan, int rows, int cols, char m[ROWS][COLS])
 {
     int xPos = fan->xPos; int yPos = fan->yPos;
-    int xVel = fan->Xvel; int yVel = fan->Yvel;
+    int xVel = fan->xVel; int yVel = fan->yVel;
     
-    char futurePos = mapa[yPos + yVel][xPos + xVel];
+    char futurePos = m[yPos + yVel][xPos + xVel];
 
     if (futurePos == '#')
     {
-        changeDirection(fan, mapa);
+        changeDirection(fan, m);
     }
     else // TODO: fantasma gasta um turno pra mudar de direção. Imagino que seja por conta desse else, mas tentei movê-lo pra fora e não deu muito certo. Resolver!
     {
-        mapa[yPos][xPos] = fan->objAbaixo;
-        mapa[yPos + yVel][xPos + xVel] = fan->skin;
+        // Deixa o objeto no chão e pega o próximo
+        m[yPos][xPos] = fan->objAbaixo;
+        if (m[yPos + yVel][xPos + xVel] = '.')
+        {
+            fan->objAbaixo = m[yPos + yVel][xPos + xVel];
+        }
+
+        // Move-se para a próxima posição
+        m[yPos + yVel][xPos + xVel] = fan->skin;
     
         fan->xPos = xPos + xVel;
         fan->yPos = yPos + yVel;
@@ -118,8 +125,8 @@ char* main(void) {
     // Loop principal do jogo
     while (1)
     {
-        makeMove(&p1, ROWS, COLS, mapa);
-        moverFantasma(&f1, ROWS, COLS, mapa);
+        moverJogador(&p1, ROWS, COLS, mapa);
+        moverFantasma(&f1, ROWS, COLS, mapa); // Mudará para moverFantasmas() assim que completarmos a função
         renderGrid(ROWS, COLS, mapa, p1, f1);
     }
 
@@ -193,12 +200,14 @@ void renderGrid(int rows, int cols, char map[rows][cols], Player player, Fantasm
         }
         printf("\n");
     }
+
+    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel);
 }
 
 int pontos = 0; // -Cayo: Uma pontuação 
 
 // TODO: contabilizar pontos quando o pacman se move para uma casa onde havia uma bolinha
-void makeMove(Player *pacman, int rows, int cols, char mapa[rows][cols])
+void moverJogador(Player *pacman, int rows, int cols, char mapa[rows][cols])
 {
     char proxMov;
     int pacX = pacman->xPos;
