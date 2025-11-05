@@ -16,7 +16,7 @@ char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#'}, // Infelizmente por enq
                          {'#', '.', '.', '.', '.', '#'},
                          {'#', '.', '.', '.', '.', '#'},
                          {'#', '#', '#', '#', '#', '#'}};
-
+char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 
 
@@ -34,7 +34,6 @@ typedef struct Fantasma
     char skin;
     int xPos, yPos;
     int xVel, yVel;
-    char objAbaixo; // Esta variável serve para guardar o que estava presente na célula que o fantasma se mover, pra que ele não apague as bolinhas ou itens
 } Fantasma;
 
 
@@ -45,12 +44,23 @@ typedef struct Fantasma
 // PROTÓTIPOS ---------------------------
 
 char getInput();
-void renderGrid(int rows, int cols, char[rows][cols], Player, Fantasma);
+void renderGrid(char[ROWS][COLS], char[ROWS][COLS], Player, Fantasma);
 void moverJogador(Player*, int rows, int cols, char mapa[rows][cols]);
 // void checkWin();
 
+void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            d[i][j] = s[i][j] == '#' ? '#' : ' ' ;
+        }
+    }
+}
+
 // Muda a direção para a qual o fantasma está andando
-int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
+int mudarDirecao(Fantasma* fan, char mapa[ROWS][COLS])
 {
     srand(time(NULL));
 
@@ -83,28 +93,23 @@ int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
     }
 }
 
-void moverFantasma(Fantasma *fan, int rows, int cols, char m[ROWS][COLS])
+void moverFantasma(Fantasma *fan, int rows, int cols, char fm[ROWS][COLS])
 {
     int xPos = fan->xPos; int yPos = fan->yPos;
     int xVel = fan->xVel; int yVel = fan->yVel;
     
-    char futurePos = m[yPos + yVel][xPos + xVel];
+    char futurePos = fm[yPos + yVel][xPos + xVel];
 
     if (futurePos == '#')
     {
-        changeDirection(fan, m);
+        mudarDirecao(fan, fm);
     }
     else // TODO: fantasma gasta um turno pra mudar de direção. Imagino que seja por conta desse else, mas tentei movê-lo pra fora e não deu muito certo. Resolver!
     {
-        // Deixa o objeto no chão e pega o próximo
-        m[yPos][xPos] = fan->objAbaixo;
-        if (m[yPos + yVel][xPos + xVel] = '.')
-        {
-            fan->objAbaixo = m[yPos + yVel][xPos + xVel];
-        }
-
         // Move-se para a próxima posição
-        m[yPos + yVel][xPos + xVel] = fan->skin;
+        fm[yPos][xPos] = ' ';
+        fm[yPos + yVel][xPos + xVel] = fan->skin;
+
     
         fan->xPos = xPos + xVel;
         fan->yPos = yPos + yVel;
@@ -117,17 +122,19 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char m[ROWS][COLS])
 
 char* main(void) {
     // Inicializando player e fantasmas
+    gerarFantasmapa(mapa, fantasmapa);
+
     Player p1 = {1, 1};
     Fantasma f1 = {'F', 1, 3, 1, 0, '.'};
 
-    renderGrid(ROWS, COLS, mapa, p1, f1);
+    renderGrid(mapa, fantasmapa, p1, f1);
 
     // Loop principal do jogo
     while (1)
     {
         moverJogador(&p1, ROWS, COLS, mapa);
-        moverFantasma(&f1, ROWS, COLS, mapa); // Mudará para moverFantasmas() assim que completarmos a função
-        renderGrid(ROWS, COLS, mapa, p1, f1);
+        moverFantasma(&f1, ROWS, COLS, fantasmapa); // Mudará para moverFantasmas() assim que completarmos a função
+        renderGrid(mapa, fantasmapa, p1, f1);
     }
 
     return "🥴";
@@ -184,19 +191,27 @@ char getInput()
     return output;
 }
 
-void renderGrid(int rows, int cols, char map[rows][cols], Player player, Fantasma f1)
+void renderGrid(char m[COLS][ROWS], char fm[COLS][ROWS], Player player, Fantasma f1)
 {
     system("cls");
 
     // Posicionando o jogador e os fantasmas
-    map[player.yPos][player.xPos] = 'C';
-    map[f1.yPos][f1.xPos] = f1.skin;
+    m[player.yPos][player.xPos] = 'C';
+    fm[f1.yPos][f1.xPos] = f1.skin;
 
-    for (int i = 0; i < rows; i++)
+    // Printa na tela o valor de cada coordenada do mapa, priorizando os valores da camada dos fantasmas
+    for (int i = 0; i < ROWS; i++)
     {
-        for (int j = 0; j < cols; j++)
+        for (int j = 0; j < COLS; j++)
         {
-            printf("%c", map[i][j]);
+            if (fm[i][j] == ' ')
+            {
+                printf("%c", m[i][j]);
+            }
+            else
+            {
+                printf("%c", fm[i][j]);
+            }
         }
         printf("\n");
     }
