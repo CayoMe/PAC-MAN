@@ -52,39 +52,33 @@ void makeMove(Player*, int rows, int cols, char mapa[rows][cols]);
 // Muda a direção para a qual o fantasma está andando
 int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
 {
-    // Loop só encerrará quando a nova velocidade não fizer o fantasma andar contra uma parede
-    while (1)
+    srand(time(NULL));
+
+    int n = rand() % 3;
+
+    if (n == 0) // Fantasma anda pra direção oposta
     {
-        srand(time(NULL));
-    
-        int n = rand() % 3;
-    
-        if (n == 0) // Fantasma anda pra direção oposta
+        fan->Xvel *= -1;
+        fan->Yvel *= -1;
+    }
+    else
+    {
+        // Fantasma andará perpendicularmente para um lado...
+        int aux = fan->Xvel;
+
+        fan->Xvel = fan->Yvel;
+        fan->Yvel = aux;
+
+        if (n == 2) // ... ou para o outro
         {
             fan->Xvel *= -1;
             fan->Yvel *= -1;
 
-            break;
-        }
-        else
-        {
-            // Fantasma andará perpendicularmente para um lado...
-            int aux = fan->Xvel;
-    
-            fan->Xvel = fan->Yvel;
-            fan->Yvel = aux;
-    
-            if (n == 2) // ... ou para o outro
+            if(mapa[fan->posY + fan->Yvel][fan->posX + fan->Xvel] == '#')
             {
                 fan->Xvel *= -1;
                 fan->Yvel *= -1;
             }
-        }
-
-        // Encerra o loop caso a nova posição não seja uma parede
-        if (mapa[fan->posY + fan->Yvel][fan->posX + fan->Xvel] != '#')
-        {
-            break;
         }
     }
 }
