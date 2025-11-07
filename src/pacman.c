@@ -3,20 +3,22 @@
 #include <stdlib.h>
 #include <time.h>    // Para gerar seed da função rand()
 
-#define ROWS 6
-#define COLS 6
+#define ROWS 7
+#define COLS 9
 
 
 
 
 // Mapa do Jueguitos ------------------------------
 
-char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#'}, // Infelizmente por enquanto o tamanho dos mapas vai ter que ser declarado em toda variável
-                         {'#', '.', '.', '.', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
-                         {'#', '.', '.', '.', '.', '#'},
-                         {'#', '.', '.', '.', '.', '#'},
-                         {'#', '#', '#', '#', '#', '#'}};
-
+char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#', '#', '#', '#'}, // Infelizmente por enquanto o tamanho dos mapas vai ter que ser declarado em toda variável
+                         {'#', '.', '.', '#', '.', '.', '.', '.', '#'}, // É BEM complicado mexer com matrizes em C, e eu tô meio atolado...
+                         {'#', '.', '.', '#', '.', '.', '.', '.', '#'},
+                         {'#', '.', '.', '.', '.', '#', '.', '.', '#'},
+                         {'#', '.', '.', '.', '.', '#', '.', '.', '#'},
+                         {'#', '.', '.', '.', '.', '#', '.', '.', '#'},
+                         {'#', '#', '#', '#', '#', '#', '#', '#', '#'}};
+char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 
 
@@ -34,7 +36,6 @@ typedef struct Fantasma
     char skin;
     int xPos, yPos;
     int xVel, yVel;
-    char objAbaixo; // Esta variável serve para guardar o que estava presente na célula que o fantasma se mover, pra que ele não apague as bolinhas ou itens
 } Fantasma;
 
 
@@ -45,25 +46,38 @@ typedef struct Fantasma
 // PROTÓTIPOS ---------------------------
 
 char getInput();
-void renderGrid(int rows, int cols, char[rows][cols], Player, Fantasma);
+void renderGrid(char[ROWS][COLS], char[ROWS][COLS], Player, Fantasma);
 void moverJogador(Player*, int rows, int cols, char mapa[rows][cols]);
 // void checkWin();
 
+void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            d[i][j] = s[i][j] == '#' ? '#' : ' ' ;
+        }
+    }
+}
+
 // Muda a direção para a qual o fantasma está andando
-int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
+// kris: Eu prevejo que essa função não vai funcionar adequadamente caso um fantasma entre num beco sem saída.
+// kris: Por enquanto, deixemos assim, MAS... se der merda, é só adicionar uma condição que conta quantos # tem em volta do fantasma, se for 3, ele vira pra trás
+int mudarDirecao(Fantasma* fan, char fm[ROWS][COLS])
 {
     srand(time(NULL));
 
     int n = rand() % 3;
 
-    if (n == 0) // Fantasma anda pra direção oposta
+    if (n == 0) // Fantasma vira para a direção oposta
     {
         fan->xVel *= -1;
         fan->yVel *= -1;
     }
     else
     {
-        // Fantasma andará perpendicularmente para um lado...
+        // Fantasma vira perpendicularmente para um lado...
         int aux = fan->xVel;
 
         fan->xVel = fan->yVel;
@@ -73,41 +87,34 @@ int changeDirection(Fantasma* fan, char mapa[ROWS][COLS])
         {
             fan->xVel *= -1;
             fan->yVel *= -1;
+        }
 
-            if(mapa[fan->yPos + fan->yVel][fan->xPos + fan->xVel] == '#')
-            {
-                fan->xVel *= -1;
-                fan->yVel *= -1;
-            }
+        // Verifica se a próxima posição é valida ou não. Se não for, inverte
+        if(fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] != ' ')
+        {
+            fan->xVel *= -1;
+            fan->yVel *= -1;
         }
     }
 }
 
-void moverFantasma(Fantasma *fan, int rows, int cols, char m[ROWS][COLS])
+void moverFantasma(Fantasma *fan, char fm[ROWS][COLS])
 {
-    int xPos = fan->xPos; int yPos = fan->yPos;
-    int xVel = fan->xVel; int yVel = fan->yVel;
-    
-    char futurePos = m[yPos + yVel][xPos + xVel];
 
-    if (futurePos == '#')
-    {
-        changeDirection(fan, m);
-    }
-    else // TODO: fantasma gasta um turno pra mudar de direção. Imagino que seja por conta desse else, mas tentei movê-lo pra fora e não deu muito certo. Resolver!
-    {
-        // Deixa o objeto no chão e pega o próximo
-        m[yPos][xPos] = fan->objAbaixo;
-        if (m[yPos + yVel][xPos + xVel] = '.')
-        {
-            fan->objAbaixo = m[yPos + yVel][xPos + xVel];
-        }
+    // Renderiza o fantasma em sua próxima posição
+    fm[fan->yPos][fan->xPos] = ' ';
+    fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] = fan->skin;
 
-        // Move-se para a próxima posição
-        m[yPos + yVel][xPos + xVel] = fan->skin;
+    // Muda de fato a coordenada do fantasma
+    fan->xPos += fan->xVel;
+    fan->yPos += fan->yVel;
+
+    int xAhead = fan->xPos + fan->xVel;
+    int yAhead = fan->yPos + fan->yVel;
     
-        fan->xPos = xPos + xVel;
-        fan->yPos = yPos + yVel;
+    if (fm[yAhead][xAhead] != ' ')
+    {
+        mudarDirecao(fan, fm);
     }
 }
 
@@ -117,17 +124,19 @@ void moverFantasma(Fantasma *fan, int rows, int cols, char m[ROWS][COLS])
 
 char* main(void) {
     // Inicializando player e fantasmas
-    Player p1 = {1, 1};
-    Fantasma f1 = {'F', 1, 3, 1, 0, '.'};
+    gerarFantasmapa(mapa, fantasmapa);
 
-    renderGrid(ROWS, COLS, mapa, p1, f1);
+    Player p1 = {1, 1};
+    Fantasma f1 = {'F', 1, 3, 1, 0};
+
+    renderGrid(mapa, fantasmapa, p1, f1);
 
     // Loop principal do jogo
     while (1)
     {
         moverJogador(&p1, ROWS, COLS, mapa);
-        moverFantasma(&f1, ROWS, COLS, mapa); // Mudará para moverFantasmas() assim que completarmos a função
-        renderGrid(ROWS, COLS, mapa, p1, f1);
+        moverFantasma(&f1, fantasmapa); // Mudará para moverFantasmas() assim que completarmos a função
+        renderGrid(mapa, fantasmapa, p1, f1);
     }
 
     return "🥴";
@@ -184,24 +193,39 @@ char getInput()
     return output;
 }
 
-void renderGrid(int rows, int cols, char map[rows][cols], Player player, Fantasma f1)
+void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma f1)
 {
     system("cls");
 
     // Posicionando o jogador e os fantasmas
-    map[player.yPos][player.xPos] = 'C';
-    map[f1.yPos][f1.xPos] = f1.skin;
+    m[player.yPos][player.xPos] = 'C';
+    fm[f1.yPos][f1.xPos] = f1.skin;
 
-    for (int i = 0; i < rows; i++)
+    // Printa na tela o valor de cada coordenada do mapa, priorizando os valores da camada dos fantasmas
+    for (int i = 0; i < ROWS; i++)
     {
-        for (int j = 0; j < cols; j++)
+        for (int j = 0; j < COLS; j++)
         {
-            printf("%c", map[i][j]);
+            if (fm[i][j] == ' ')
+            {
+                printf("%c", m[i][j]);
+            }
+            else
+            {
+                printf("%c", fm[i][j]);
+            }
         }
+        printf("|");                   // DEBUG 02
+        for (int k = 0; k < COLS; k++) // DEBUG 02
+        {                              // DEBUG 02
+            printf("%c", fm[i][k]);    // DEBUG 02
+        }                              // DEBUG 02
         printf("\n");
     }
 
-    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel);
+    int xAhead = f1.xPos + f1.xVel; int yAhead = f1.yPos + f1.yVel;                                                            // DEBUG 01
+    printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
+    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
 
 int pontos = 0; // -Cayo: Uma pontuação 
