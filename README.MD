@@ -62,7 +62,24 @@ Por conta disso, sempre que, no código, é necessário referenciar alguma célu
 
 ### `moverFantasma()`
 `void moverFantasma(Fantasma *fan, char fm[ROWS][COLS]);`
-Recebe um ponteiro para o fantasma e a matriz do [Fantasmapa](#fantasmapa) DONKEY
+Recebe um ponteiro para o fantasma e o [Fantasmapa](#fantasmapa).
+Apaga a célula que o fantasma estava → escreve a `skin` do fantasma na posição que o fantasma se moverá → altera os valores das coordenadas do fantasma para os da nova célula → "olha" qual será a próxima célula, se estiver vazia nada acontece, se for uma parede, chama [`mudarDirecao()`](#mudardirecao) para alterar as velocidades do fantasma.
+
+### `gerarFantasmapa()`
+`void gerarFantasmapa(char[ROWS][COLS], char[ROWS][COLS]);`
+Recebe o [mapa](#mapa-principal) e o [fantasmapa](#fantasmapa).
+Loopa por todo o mapa → para cada célula, se a célula for uma parede `#`, escreve um parede no fantasmapa, se não, escreve um espaço `' '`.
+
+### `renderGrid()`
+`void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma f1);`
+Recebe o mapa, o fantasmapa, o jogador, e o(s) fantasma(s).
+Posiciona o jogador e os fantasmas nas células com suas coordenadas → loopa por todas as coordenadas do mapa → verifica se a célula está vazia no fantasmapa, se estiver, printa a célula do mapa, se não estiver vazia, printa o que está no fantasmapa.
+
+### `moverJogador()`
+`void moverJogador(Player*, int rows, int cols, char[rows][cols]);`
+Recebe o jogador e o mapa.
+Recebe a entrada do jogador com [getInput()](#getinput) // CONTINUE
+
 
 ---
 

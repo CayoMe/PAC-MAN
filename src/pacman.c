@@ -49,7 +49,7 @@ char getInput();
 void gerarFantasmapa(char[ROWS][COLS], char[ROWS][COLS]);
 void renderGrid(char[ROWS][COLS], char[ROWS][COLS], Player, Fantasma);
 void moverJogador(Player*, int rows, int cols, char[rows][cols]);
-void moverFantasma(Fantasma *, char[ROWS][COLS]);
+void moverFantasma(Fantasma*, char[ROWS][COLS]);
 int mudarDirecao(Fantasma*, char[ROWS][COLS]);
 
 void checkwin()
