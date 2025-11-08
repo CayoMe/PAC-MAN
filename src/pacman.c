@@ -26,7 +26,7 @@ char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 // STRUCTS ------------------------------
 
-typedef struct Player // Talvez seria interessante fazer uma estrutura "Entidade" que possa ser o Pacman e o fantasma?
+typedef struct Player
 {
     int xPos, yPos;
 } Player;
@@ -46,77 +46,20 @@ typedef struct Fantasma
 // PROTÓTIPOS ---------------------------
 
 char getInput();
+void gerarFantasmapa(char[ROWS][COLS], char[ROWS][COLS]);
 void renderGrid(char[ROWS][COLS], char[ROWS][COLS], Player, Fantasma);
-void moverJogador(Player*, int rows, int cols, char mapa[rows][cols]);
-// void checkWin();
+void moverJogador(Player*, int rows, int cols, char[rows][cols]);
+void moverFantasma(Fantasma *, char[ROWS][COLS]);
+int mudarDirecao(Fantasma*, char[ROWS][COLS]);
 
-void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
+void checkwin()
 {
-    for (int i = 0; i < ROWS; i++)
-    {
-        for (int j = 0; j < COLS; j++)
-        {
-            d[i][j] = s[i][j] == '#' ? '#' : ' ' ;
-        }
-    }
+    // TODO
 }
 
-// Muda a direção para a qual o fantasma está andando
-// kris: Eu prevejo que essa função não vai funcionar adequadamente caso um fantasma entre num beco sem saída.
-// kris: Por enquanto, deixemos assim, MAS... se der merda, é só adicionar uma condição que conta quantos # tem em volta do fantasma, se for 3, ele vira pra trás
-int mudarDirecao(Fantasma* fan, char fm[ROWS][COLS])
-{
-    srand(time(NULL));
 
-    int n = rand() % 3;
 
-    if (n == 0) // Fantasma vira para a direção oposta
-    {
-        fan->xVel *= -1;
-        fan->yVel *= -1;
-    }
-    else
-    {
-        // Fantasma vira perpendicularmente para um lado...
-        int aux = fan->xVel;
 
-        fan->xVel = fan->yVel;
-        fan->yVel = aux;
-
-        if (n == 2) // ... ou para o outro
-        {
-            fan->xVel *= -1;
-            fan->yVel *= -1;
-        }
-
-        // Verifica se a próxima posição é valida ou não. Se não for, inverte
-        if(fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] != ' ')
-        {
-            fan->xVel *= -1;
-            fan->yVel *= -1;
-        }
-    }
-}
-
-void moverFantasma(Fantasma *fan, char fm[ROWS][COLS])
-{
-
-    // Renderiza o fantasma em sua próxima posição
-    fm[fan->yPos][fan->xPos] = ' ';
-    fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] = fan->skin;
-
-    // Muda de fato a coordenada do fantasma
-    fan->xPos += fan->xVel;
-    fan->yPos += fan->yVel;
-
-    int xAhead = fan->xPos + fan->xVel;
-    int yAhead = fan->yPos + fan->yVel;
-    
-    if (fm[yAhead][xAhead] != ' ')
-    {
-        mudarDirecao(fan, fm);
-    }
-}
 
 
 
@@ -191,6 +134,17 @@ char getInput()
     }
 
     return output;
+}
+
+void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            d[i][j] = s[i][j] == '#' ? '#' : ' ' ;
+        }
+    }
 }
 
 void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma f1)
@@ -287,7 +241,58 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[rows][cols])
     }
 }
 
-void checkwin()
+void moverFantasma(Fantasma *fan, char fm[ROWS][COLS])
 {
-    // TODO
+    // Renderiza o fantasma em sua próxima posição
+    fm[fan->yPos][fan->xPos] = ' ';
+    fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] = fan->skin;
+
+    // Muda de fato a coordenada do fantasma
+    fan->xPos += fan->xVel;
+    fan->yPos += fan->yVel;
+
+    int xAhead = fan->xPos + fan->xVel;
+    int yAhead = fan->yPos + fan->yVel;
+    
+    if (fm[yAhead][xAhead] != ' ')
+    {
+        mudarDirecao(fan, fm);
+    }
+}
+
+// Muda a direção para a qual o fantasma está andando
+// kris: Eu prevejo que essa função não vai funcionar adequadamente caso um fantasma entre num beco sem saída.
+// kris: Por enquanto, deixemos assim, MAS... se der merda, é só adicionar uma condição que conta quantos # tem em volta do fantasma, se for 3, ele vira pra trás
+int mudarDirecao(Fantasma* fan, char fm[ROWS][COLS])
+{
+    srand(time(NULL));
+
+    int n = rand() % 3;
+
+    if (n == 0) // Fantasma vira para a direção oposta
+    {
+        fan->xVel *= -1;
+        fan->yVel *= -1;
+    }
+    else
+    {
+        // Fantasma vira perpendicularmente para um lado...
+        int aux = fan->xVel;
+
+        fan->xVel = fan->yVel;
+        fan->yVel = aux;
+
+        if (n == 2) // ... ou para o outro
+        {
+            fan->xVel *= -1;
+            fan->yVel *= -1;
+        }
+
+        // Verifica se a próxima posição é valida ou não. Se não for, inverte
+        if(fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] != ' ')
+        {
+            fan->xVel *= -1;
+            fan->yVel *= -1;
+        }
+    }
 }
