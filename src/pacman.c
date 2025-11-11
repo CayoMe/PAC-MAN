@@ -19,6 +19,7 @@ char mapa[ROWS][COLS] = {{'#', '#', '#', '#', '#', '#', '#', '#', '#'}, // Infel
                          {'#', '.', '.', '.', '.', '#', '.', '.', '#'},
                          {'#', '#', '#', '#', '#', '#', '#', '#', '#'}};
 char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
+int pontos = 0; // pontuação 
 
 
 
@@ -160,13 +161,27 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (fm[i][j] == ' ')
-            {
-                printf("%c", m[i][j]);
+            if (fm[i][j] == ' '){
+                if (m[i][j] == 'C'){
+                    printf("\033[1;33m%c\033[0m", m[i][j]); // Pac-Man amarelo
+                }
+                else{
+                    printf("%c", m[i][j]);
+                }
             }
-            else
-            {
-                printf("%c", fm[i][j]);
+            else{
+                if (fm[i][j] == 'F'){
+                    printf("\033[1;31m%c\033[0m", fm[i][j]); // Fantasma vermelho
+                    if (m[i][j] == 'C'){
+                        system("cls");
+                        printf("\nGame Over!!\n");
+                        printf("Sua pontuacao: %d\n", pontos);
+                        exit(0);
+                    }
+                }
+                else{
+                    printf("%c", fm[i][j]);
+                }
             }
         }
         printf("|");                   // DEBUG 02
@@ -181,8 +196,6 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
     printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
     printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
-
-int pontos = 0; // -Cayo: Uma pontuação 
 
 // TODO: contabilizar pontos quando o pacman se move para uma casa onde havia uma bolinha
 void moverJogador(Player *pacman, int rows, int cols, char mapa[rows][cols])
