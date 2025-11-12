@@ -63,6 +63,7 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
 void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma f1, int *pontos)
 {
     system("cls");
+    int temCirculos = 0;
 
     // Posicionando o jogador e os fantasmas
     m[player.yPos][player.xPos] = 'C';
@@ -73,32 +74,29 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (fm[i][j] == ' ')
-            {
-                if (m[i][j] == 'C')
-                {
+            if (m[i][j] == '.' && temCirculos == 0){
+                temCirculos = 1;
+            }
+            else
+            if (fm[i][j] == ' '){
+                if (m[i][j] == 'C'){
                     printf("\033[1;33m%c\033[0m", m[i][j]); // Pac-Man amarelo
                 }
-                else
-                {
+                else{
                     printf("%c", m[i][j]);
                 }
             }
-            else
-            {
-                if (fm[i][j] == 'F')
-                {
+            else{
+                if (fm[i][j] == 'F'){
                     printf("\033[1;31m%c\033[0m", fm[i][j]); // Fantasma vermelho
-                    if (m[i][j] == 'C')
-                    {
+                    if (m[i][j] == 'C'){
                         system("cls");
                         printf("\nGame Over!!\n");
                         printf("Sua pontuacao: %d\n", (*pontos));
                         exit(0);
                     }
                 }
-                else
-                {
+                else{
                     printf("%c", fm[i][j]);
                 }
             }
@@ -110,6 +108,13 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
         } // DEBUG 02
         printf("\n");
     }
+
+    if (temCirculos == 0) {
+            system("cls");
+            printf("\nParabens, voce venceu!!\n");
+            printf("Sua pontuacao: %d\n", (*pontos));
+            exit(0);
+        }
 
     int xAhead = f1.xPos + f1.xVel;
     int yAhead = f1.yPos + f1.yVel;                                                                                            // DEBUG 01
