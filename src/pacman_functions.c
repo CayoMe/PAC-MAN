@@ -77,7 +77,6 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
             if (m[i][j] == '.' && temCirculos == 0){
                 temCirculos = 1;
             }
-            else
             if (fm[i][j] == ' '){
                 if (m[i][j] == 'C'){
                     printf("\033[1;33m%c\033[0m", m[i][j]); // Pac-Man amarelo
