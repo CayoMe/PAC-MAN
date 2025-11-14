@@ -8,7 +8,7 @@
 // Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
 char getInput()
 {
-    char output;
+    char output=0;
 
     while (!output)
     {
