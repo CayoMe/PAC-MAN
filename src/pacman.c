@@ -1,4 +1,7 @@
 #include "pacman_functions.h"
+#include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
 
 char mapa[ROWS][COLS] = {
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
@@ -36,17 +39,29 @@ char* main(void) {
     // Inicializando player e fantasmas
     gerarFantasmapa(mapa, fantasmapa);
 
-    Player p1 = {11, 15};
-    Fantasma f1 = {'F', 11, 9, 1, 0};
+    Player p1 = {9, 15, 'd'}; // Começa olhando para baixo
 
-    renderGrid(mapa, fantasmapa, p1, f1, pontos);
+    // Array dos fantasmas
+    Fantasma fantasmas[4] = {
+        {'F', 9, 9, 1, 0},  // Fantasma 1 (vermelho)
+        {'P', 10, 9, 1, 0}, // Fantasma 2 (rosa)
+        {'I', 11, 9, 1, 0},// Fantasma 3 (azul)
+        {'O', 12, 9, 1, 0} // Fantasma 4 (laranja)
+    };
+    int num_fantasmas = 4;
 
     // Loop principal do jogo
     while (1)
     {
         moverJogador(&p1, ROWS, COLS, mapa, pontos);
-        moverFantasma(&f1, fantasmapa); // Mudará para moverFantasmas() assim que completarmos a função
-        renderGrid(mapa, fantasmapa, p1, f1, pontos);
+
+        // Loop para mover TODOS os fantasmas
+        for (int i = 0; i < num_fantasmas; i++) {
+            moverFantasma(&fantasmas[i], fantasmapa, p1);
+        }
+
+        // Renderiza tudo para criar o frame
+        renderGrid(mapa, fantasmapa, p1, fantasmas, num_fantasmas, pontos);
     }
 
     return "🥴";

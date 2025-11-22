@@ -4,6 +4,7 @@
 typedef struct Player
 {
     int xPos, yPos;
+    char dir; // 'u', 'd', 'l', 'r'
 } Player;
 
 typedef struct Fantasma

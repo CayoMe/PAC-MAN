@@ -54,11 +54,13 @@ char getInput()
 
 void telaInicial()
 {
+    system("mode con: cols=300 lines=100"); // só pra deixar a arte certinha sem quebrar no cmd
     #ifdef _WIN32
         system("chcp 65001 > nul"); 
     #endif
     system("cls");
-        printf("\x1b[38;2;7;8;2mc\x1b[0m\x1b[38;2;7;9;4mc\x1b[0m\x1b[38;2;16;25;42my\x1b[0m\x1b[38;2;22;34;52mo\x1b[0m\x1b[38;2;22;32;49my\x1b[0m\x1b[38;2;21;34;45my\x1b[0m\x1b[38;2;14;30;41my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;28;39my\x1b[0m\x1b[38;2;37;55;66mb\x1b[0m\x1b[38;2;25;43;54mo\x1b[0m\x1b[38;2;12;28;39my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;13;30;41my\x1b[0m\x1b[38;2;33;53;63mb\x1b[0m\x1b[38;2;27;45;55mo\x1b[0m\x1b[38;2;14;30;40my\x1b[0m\x1b[38;2;40;60;70me\x1b[0m\x1b[38;2;17;35;45my\x1b[0m\x1b[38;2;31;52;62mb\x1b[0m\x1b[38;2;28;50;62mb\x1b[0m\x1b[38;2;40;59;69me\x1b[0m\x1b[38;2;21;36;45mo\x1b[0m\x1b[38;2;17;33;44my\x1b[0m\x1b[38;2;42;62;74me\x1b[0m\x1b[38;2;31;52;66mb\x1b[0m\x1b[38;2;32;53;66mb\x1b[0m\x1b[38;2;13;29;43my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;40;60;70me\x1b[0m\x1b[38;2;26;44;55mo\x1b[0m\x1b[38;2;36;57;67mb\x1b[0m\x1b[38;2;38;58;69me\x1b[0m\x1b[38;2;42;62;73me\x1b[0m\x1b[38;2;42;62;72me\x1b[0m\x1b[38;2;26;45;56mo\x1b[0m\x1b[38;2;34;54;64mb\x1b[0m\x1b[38;2;19;33;44my\x1b[0m\x1b[38;2;12;19;27ma\x1b[0m\x1b[38;2;28;33;27my\x1b[0m\x1b[38;2;17;29;40my\x1b[0m\x1b[38;2;30;46;60mb\x1b[0m\x1b[38;2;13;29;41my\x1b[0m\x1b[38;2;14;31;38my\x1b[0m\x1b[38;2;28;44;55mo\x1b[0m\x1b[38;2;26;42;52mo\x1b[0m\x1b[38;2;37;61;70me\x1b[0m\x1b[38;2;30;53;62mb\x1b[0m\x1b[38;2;27;50;60mb\x1b[0m\x1b[38;2;29;46;53mo\x1b[0m\x1b[38;2;13;29;38my\x1b[0m\x1b[38;2;12;21;24ma\x1b[0m\x1b[38;2;33;27;29my\x1b[0m\x1b[38;2;30;27;33my\x1b[0m\x1b[38;2;19;28;40my\x1b[0m\x1b[38;2;42;58;68me\x1b[0m\x1b[38;2;32;50;61mb\x1b[0m\x1b[38;2;38;56;65mb\x1b[0m\x1b[38;2;18;38;49mo\x1b[0m\x1b[38;2;23;38;48mo\x1b[0m\x1b[38;2;14;27;37my\x1b[0m\x1b[38;2;21;37;48mo\x1b[0m\x1b[38;2;23;42;53mo\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;28;39my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;41my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;13;29;40my\x1b[0m\x1b[38;2;11;29;39my\x1b[0m\x1b[38;2;14;29;39my\x1b[0m\x1b[38;2;13;30;38my\x1b[0m\x1b[38;2;17;25;42my\x1b[0m\x1b[38;2;6;7;6mc\x1b[0m\x1b[38;2;7;7;7mc\x1b[0m\n");
+
+    printf("\x1b[38;2;7;8;2mc\x1b[0m\x1b[38;2;7;9;4mc\x1b[0m\x1b[38;2;16;25;42my\x1b[0m\x1b[38;2;22;34;52mo\x1b[0m\x1b[38;2;22;32;49my\x1b[0m\x1b[38;2;21;34;45my\x1b[0m\x1b[38;2;14;30;41my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;28;39my\x1b[0m\x1b[38;2;37;55;66mb\x1b[0m\x1b[38;2;25;43;54mo\x1b[0m\x1b[38;2;12;28;39my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;13;30;41my\x1b[0m\x1b[38;2;33;53;63mb\x1b[0m\x1b[38;2;27;45;55mo\x1b[0m\x1b[38;2;14;30;40my\x1b[0m\x1b[38;2;40;60;70me\x1b[0m\x1b[38;2;17;35;45my\x1b[0m\x1b[38;2;31;52;62mb\x1b[0m\x1b[38;2;28;50;62mb\x1b[0m\x1b[38;2;40;59;69me\x1b[0m\x1b[38;2;21;36;45mo\x1b[0m\x1b[38;2;17;33;44my\x1b[0m\x1b[38;2;42;62;74me\x1b[0m\x1b[38;2;31;52;66mb\x1b[0m\x1b[38;2;32;53;66mb\x1b[0m\x1b[38;2;13;29;43my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;40;60;70me\x1b[0m\x1b[38;2;26;44;55mo\x1b[0m\x1b[38;2;36;57;67mb\x1b[0m\x1b[38;2;38;58;69me\x1b[0m\x1b[38;2;42;62;73me\x1b[0m\x1b[38;2;42;62;72me\x1b[0m\x1b[38;2;26;45;56mo\x1b[0m\x1b[38;2;34;54;64mb\x1b[0m\x1b[38;2;19;33;44my\x1b[0m\x1b[38;2;12;19;27ma\x1b[0m\x1b[38;2;28;33;27my\x1b[0m\x1b[38;2;17;29;40my\x1b[0m\x1b[38;2;30;46;60mb\x1b[0m\x1b[38;2;13;29;41my\x1b[0m\x1b[38;2;14;31;38my\x1b[0m\x1b[38;2;28;44;55mo\x1b[0m\x1b[38;2;26;42;52mo\x1b[0m\x1b[38;2;37;61;70me\x1b[0m\x1b[38;2;30;53;62mb\x1b[0m\x1b[38;2;27;50;60mb\x1b[0m\x1b[38;2;29;46;53mo\x1b[0m\x1b[38;2;13;29;38my\x1b[0m\x1b[38;2;12;21;24ma\x1b[0m\x1b[38;2;33;27;29my\x1b[0m\x1b[38;2;30;27;33my\x1b[0m\x1b[38;2;19;28;40my\x1b[0m\x1b[38;2;42;58;68me\x1b[0m\x1b[38;2;32;50;61mb\x1b[0m\x1b[38;2;38;56;65mb\x1b[0m\x1b[38;2;18;38;49mo\x1b[0m\x1b[38;2;23;38;48mo\x1b[0m\x1b[38;2;14;27;37my\x1b[0m\x1b[38;2;21;37;48mo\x1b[0m\x1b[38;2;23;42;53mo\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;28;39my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;12;29;41my\x1b[0m\x1b[38;2;12;29;40my\x1b[0m\x1b[38;2;13;29;40my\x1b[0m\x1b[38;2;11;29;39my\x1b[0m\x1b[38;2;14;29;39my\x1b[0m\x1b[38;2;13;30;38my\x1b[0m\x1b[38;2;17;25;42my\x1b[0m\x1b[38;2;6;7;6mc\x1b[0m\x1b[38;2;7;7;7mc\x1b[0m\n");
     printf("\x1b[38;2;6;8;11mc\x1b[0m\x1b[38;2;10;6;12mc\x1b[0m\x1b[38;2;52;103;140mr\x1b[0m\x1b[38;2;55;124;172mz\x1b[0m\x1b[38;2;56;124;168mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;169mz\x1b[0m\x1b[38;2;55;124;168mz\x1b[0m\x1b[38;2;58;124;165mz\x1b[0m\x1b[38;2;51;125;172mz\x1b[0m\x1b[38;2;51;125;172mz\x1b[0m\x1b[38;2;56;124;166mz\x1b[0m\x1b[38;2;56;124;166mz\x1b[0m\x1b[38;2;59;122;164mz\x1b[0m\x1b[38;2;58;123;166mz\x1b[0m\x1b[38;2;52;126;172mz\x1b[0m\x1b[38;2;54;125;168mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;55;124;167mz\x1b[0m\x1b[38;2;55;124;167mz\x1b[0m\x1b[38;2;55;124;167mz\x1b[0m\x1b[38;2;55;124;167mz\x1b[0m\x1b[38;2;58;122;168mz\x1b[0m\x1b[38;2;39;76;93ma\x1b[0m\x1b[38;2;28;49;63mb\x1b[0m\x1b[38;2;54;121;161mi\x1b[0m\x1b[38;2;53;123;172mz\x1b[0m\x1b[38;2;54;125;167mz\x1b[0m\x1b[38;2;54;111;141mi\x1b[0m\x1b[38;2;50;110;150mi\x1b[0m\x1b[38;2;52;125;167mz\x1b[0m\x1b[38;2;55;124;167mz\x1b[0m\x1b[38;2;54;125;168mz\x1b[0m\x1b[38;2;57;124;166mz\x1b[0m\x1b[38;2;36;95;133mt\x1b[0m\x1b[38;2;60;123;163mz\x1b[0m\x1b[38;2;48;81;104ma\x1b[0m\x1b[38;2;30;31;36my\x1b[0m\x1b[38;2;27;31;31my\x1b[0m\x1b[38;2;36;69;93me\x1b[0m\x1b[38;2;60;123;169mz\x1b[0m\x1b[38;2;35;77;106ma\x1b[0m\x1b[38;2;41;88;116mt\x1b[0m\x1b[38;2;56;121;162mi\x1b[0m\x1b[38;2;56;125;169mz\x1b[0m\x1b[38;2;56;123;165mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;53;124;168mz\x1b[0m\x1b[38;2;54;124;169mz\x1b[0m\x1b[38;2;53;124;170mz\x1b[0m\x1b[38;2;52;126;168mz\x1b[0m\x1b[38;2;57;111;142mi\x1b[0m\x1b[38;2;7;7;9mc\x1b[0m\x1b[38;2;6;6;6mc\x1b[0m \n");
     printf("\x1b[38;2;11;10;10mc\x1b[0m\x1b[38;2;8;10;11mc\x1b[0m\x1b[38;2;53;103;137mr\x1b[0m\x1b[38;2;53;125;170mz\x1b[0m\x1b[38;2;54;125;168mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;124;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;53;125;169mz\x1b[0m\x1b[38;2;55;124;168mz\x1b[0m\x1b[38;2;55;124;166mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;55;123;169mz\x1b[0m\x1b[38;2;55;123;170mz\x1b[0m\x1b[38;2;54;124;170mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;52;125;170mz\x1b[0m\x1b[38;2;55;124;165mz\x1b[0m\x1b[38;2;62;122;152mz\x1b[0m\x1b[38;2;27;43;61mo\x1b[0m\x1b[38;2;38;32;30mo\x1b[0m\x1b[38;2;75;33;24mb\x1b[0m\x1b[38;2;69;32;28mb\x1b[0m\x1b[38;2;35;29;35my\x1b[0m\x1b[38;2;30;56;67mb\x1b[0m\x1b[38;2;54;124;164mz\x1b[0m\x1b[38;2;53;124;172mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;54;125;162mz\x1b[0m\x1b[38;2;54;123;170mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;124;168mz\x1b[0m\x1b[38;2;54;123;174mz\x1b[0m\x1b[38;2;54;124;170mz\x1b[0m\x1b[38;2;54;125;165mz\x1b[0m\x1b[38;2;46;110;152mi\x1b[0m\x1b[38;2;55;124;166mz\x1b[0m\x1b[38;2;57;124;170mz\x1b[0m\x1b[38;2;56;123;168mz\x1b[0m\x1b[38;2;57;121;159mi\x1b[0m\x1b[38;2;15;31;40my\x1b[0m\x1b[38;2;58;119;162mi\x1b[0m\x1b[38;2;57;123;171mz\x1b[0m\x1b[38;2;51;126;170mz\x1b[0m\x1b[38;2;47;133;164mz\x1b[0m\x1b[38;2;54;102;131mr\x1b[0m\x1b[38;2;55;116;151mi\x1b[0m\x1b[38;2;58;125;166mz\x1b[0m\x1b[38;2;162;193;209mr\x1b[0m\x1b[38;2;107;139;154ma\x1b[0m\x1b[38;2;50;95;121mt\x1b[0m\x1b[38;2;62;120;159mz\x1b[0m\x1b[38;2;58;124;175mz\x1b[0m\x1b[38;2;61;118;163mi\x1b[0m\x1b[38;2;51;93;114mt\x1b[0m\x1b[38;2;51;104;136mr\x1b[0m\x1b[38;2;57;125;171mz\x1b[0m\x1b[38;2;53;126;165mz\x1b[0m\x1b[38;2;59;117;162mi\x1b[0m\x1b[38;2;54;128;164mz\x1b[0m\x1b[38;2;52;124;170mz\x1b[0m\x1b[38;2;53;126;170mz\x1b[0m\x1b[38;2;53;125;167mz\x1b[0m\x1b[38;2;53;124;170mz\x1b[0m\x1b[38;2;53;124;171mz\x1b[0m\x1b[38;2;52;125;170mz\x1b[0m\x1b[38;2;51;126;167mz\x1b[0m\x1b[38;2;53;125;170mz\x1b[0m\x1b[38;2;55;124;167mz\x1b[0m\x1b[38;2;53;123;169mz\x1b[0m\x1b[38;2;55;111;147mi\x1b[0m\x1b[38;2;8;11;13mc\x1b[0m\x1b[38;2;9;9;9mc\x1b[0m \n");
     printf("\x1b[38;2;56;56;56me\x1b[0m\x1b[38;2;51;53;55mb\x1b[0m\x1b[38;2;59;109;142mi\x1b[0m\x1b[38;2;52;125;170mz\x1b[0m\x1b[38;2;55;125;168mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;169mz\x1b[0m\x1b[38;2;54;125;168mz\x1b[0m\x1b[38;2;56;124;163mz\x1b[0m\x1b[38;2;55;125;166mz\x1b[0m\x1b[38;2;53;125;168mz\x1b[0m\x1b[38;2;54;125;168mz\x1b[0m\x1b[38;2;52;124;170mz\x1b[0m\x1b[38;2;54;124;171mz\x1b[0m\x1b[38;2;56;125;168mz\x1b[0m\x1b[38;2;57;125;167mz\x1b[0m\x1b[38;2;56;125;167mz\x1b[0m\x1b[38;2;112;161;185mi\x1b[0m\x1b[38;2;128;129;127ma\x1b[0m\x1b[38;2;43;26;25my\x1b[0m\x1b[38;2;159;56;49mr\x1b[0m\x1b[38;2;206;64;51mi\x1b[0m\x1b[38;2;200;53;52mi\x1b[0m\x1b[38;2;192;59;57mi\x1b[0m\x1b[38;2;67;34;37mb\x1b[0m\x1b[38;2;26;48;56mo\x1b[0m\x1b[38;2;52;125;162mz\x1b[0m\x1b[38;2;52;125;165mz\x1b[0m\x1b[38;2;53;124;168mz\x1b[0m\x1b[38;2;54;124;167mz\x1b[0m\x1b[38;2;55;125;166mz\x1b[0m\x1b[38;2;53;124;168mz\x1b[0m\x1b[38;2;53;123;174mz\x1b[0m\x1b[38;2;53;125;166mz\x1b[0m\x1b[38;2;53;124;170mz\x1b[0m\x1b[38;2;52;124;172mz\x1b[0m\x1b[38;2;52;126;167mz\x1b[0m\x1b[38;2;53;124;166mz\x1b[0m\x1b[38;2;54;123;172mz\x1b[0m\x1b[38;2;56;123;165mz\x1b[0m\x1b[38;2;47;86;111mt\x1b[0m\x1b[38;2;41;66;86me\x1b[0m\x1b[38;2;54;126;168mz\x1b[0m\x1b[38;2;53;125;168mz\x1b[0m\x1b[38;2;54;125;167mz\x1b[0m\x1b[38;2;46;89;109mt\x1b[0m\x1b[38;2;30;32;29my\x1b[0m\x1b[38;2;27;29;40my\x1b[0m\x1b[38;2;181;197;201mi\x1b[0m\x1b[38;2;71;69;66ma\x1b[0m\x1b[38;2;32;29;26my\x1b[0m\x1b[38;2;32;29;30my\x1b[0m\x1b[38;2;47;44;46mb\x1b[0m\x1b[38;2;248;246;247ma\x1b[0m\x1b[38;2;49;50;53mb\x1b[0m\x1b[38;2;32;32;32mo\x1b[0m\x1b[38;2;34;32;33mo\x1b[0m\x1b[38;2;47;84;110mt\x1b[0m\x1b[38;2;44;92;123mt\x1b[0m\x1b[38;2;32;30;29my\x1b[0m\x1b[38;2;30;32;30my\x1b[0m\x1b[38;2;25;31;38my\x1b[0m\x1b[38;2;49;104;133mr\x1b[0m\x1b[38;2;54;110;147mi\x1b[0m\x1b[38;2;57;124;163mz\x1b[0m\x1b[38;2;52;125;168mz\x1b[0m\x1b[38;2;52;125;171mz\x1b[0m\x1b[38;2;54;123;171mz\x1b[0m\x1b[38;2;53;124;171mz\x1b[0m\x1b[38;2;56;123;168mz\x1b[0m\x1b[38;2;53;124;170mz\x1b[0m\x1b[38;2;59;115;152mi\x1b[0m\x1b[38;2;46;48;50mb\x1b[0m\x1b[38;2;47;46;47mb\x1b[0m \n");
@@ -132,16 +134,20 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
     }
 }
 
-void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma f1, int *pontos)
+void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
 {
     system("cls");
     int temCirculos = 0;
 
-    // Posicionando o jogador e os fantasmas
+    // Posicionando o jogador
     m[player.yPos][player.xPos] = 'C';
-    fm[f1.yPos][f1.xPos] = f1.skin;
+    
+    // Posiciona TODOS os fantasmas no fantasmapa
+    for (int i = 0; i < num_fantasmas; i++) {
+        fm[fantasmas[i].yPos][fantasmas[i].xPos] = fantasmas[i].skin;
+    }
 
-    // Printa na tela o valor de cada coordenada do mapa, priorizando os valores da camada dos fantasmas
+    // Printa na tela o valor de cada coordenada do mapa, priorizando sempre os valores da camada dos fantasmas
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
@@ -161,16 +167,27 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                 }
             }
             else{
-                if (fm[i][j] == 'F'){
-                    printf("\033[1;31m%c\033[0m", fm[i][j]); // Fantasma vermelho
-                    if (m[i][j] == 'C'){
+                // Colisão e Cores
+                char skin = fm[i][j];
+                if (skin == 'F' || skin == 'P' || skin == 'I' || skin == 'O'){
+
+
+                    // Mundando a cor de cada fantasminha
+                    if (skin == 'F') printf("\033[1;31m%c\033[0m", skin); // Vermelho
+                    if (skin == 'P') printf("\033[1;35m%c\033[0m", skin); // Rosa
+                    if (skin == 'I') printf("\033[1;36m%c\033[0m", skin); // Ciano (Azul)
+                    if (skin == 'O') printf("\033[1;33m%c\033[0m", skin); // Laranja (Amarelo)
+
+
+                    // Verificando se vai colidir com algo
+                    if (m[i][j] == 'C'){ 
                         system("cls");
                         printf("\nGame Over!!\n");
                         printf("Sua pontuacao: %d\n", (*pontos));
                         exit(0);
                     }
                 }
-                else if (fm[i][j] == '#') { // Eu odeio o fantasmapa real ofical
+                else if (fm[i][j] == '#') {
                     printf("\u2588");
                 }
                 else{
@@ -193,13 +210,14 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
             exit(0);
         }
 
-    int xAhead = f1.xPos + f1.xVel;
-    int yAhead = f1.yPos + f1.yVel;                                                                                           // DEBUG 01
+    // DEBUG 01 Mudei pra pegar só o primeiro fantasma
+    int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;
+    int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                                                                           // DEBUG 01
     printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
-    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", f1.xPos, f1.yPos, f1.xVel, f1.yVel, fm[yAhead][xAhead]); // DEBUG 01
+    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
 
-// TODO: contabilizar pontos quando o pacman se move para uma casa onde havia uma bolinha
+// Função que move o jogador
 void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], int *pontos)
 {
     char proxMov;
@@ -208,25 +226,33 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], int
 
     while (1)
     {
-        int deltaX = 0, deltaY = 0; // Incrementos da coordenada do jogador
+        int deltaX = 0, deltaY = 0; // Guarda os comandos das coordenadas do jogador
         proxMov = getInput();
 
-        // Incrementa os deltas dependendo da entrada do jogador
-        if (proxMov == 'r')
+        // Incrementando os deltas dependendo da entrada do jogador para os fantasmas saberem onde ir
+        if (proxMov == 'r') {
+            pacman->dir = 'r';
             deltaX++;
-        else if (proxMov == 'l')
+        }
+        else if (proxMov == 'l') {
+            pacman->dir = 'l';
             deltaX--;
-        else if (proxMov == 'u')
+        }
+        else if (proxMov == 'u') {
+            pacman->dir = 'u';
             deltaY--;
-        else if (proxMov == 'd')
+        }
+        else if (proxMov == 'd') {
+            pacman->dir = 'd';
             deltaY++;
+        }
         else // Talvez não precise dessa parte
         {
             printf("movimento inválido!\n");
             break;
         }
 
-        // Verificando a validade do movimento (parede => nada acontece; fantasma => jogo encerra)
+        // Verificando a validade do movimento (parede '#' => nada acontece; fantasma 'F' => jogo encerra)
         if (mapa[pacY + deltaY][pacX + deltaX] == '#')
         {
             printf("vc acertaria uma parede\n");
@@ -257,63 +283,134 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], int
     }
 }
 
-void moverFantasma(Fantasma *fan, char fm[ROWS][COLS])
+void moverFantasma(Fantasma *fan, char fm[ROWS][COLS], Player p)
 {
-    // Pegando a posição do fantasma primeiro, 
-    int xAhead = fan->xPos + fan->xVel;
-    int yAhead = fan->yPos + fan->yVel;
-
-    if (fm[yAhead][xAhead] != ' ')
-    {
-        mudarDirecao(fan, fm);
-        xAhead = fan->xPos + fan->xVel;
-        yAhead = fan->yPos + fan->yVel;
-    }
-
-    // Apaga a posição antiga do fantasma
+    // Apaga o desenho antigo do fantasma
     fm[fan->yPos][fan->xPos] = ' ';
 
-    // Muda de fato a coordenada do fantasma
-    fan->xPos = xAhead;
-    fan->yPos = yAhead;
+    // O ALVO é para onde o fantasma está olhando: O local para onde ele vai ir dependendo da situação
+    int alvoX, alvoY;
 
-     // Renderiza o fantasma em sua próxima posição
+    // Condição para fazer ele sair da casinha
+    // Se os fantasmas estão na linha 9 (dentro da casinha), eles vão até a porta (linha 8, coluna 12)
+    if (fan->yPos == 9 && fan->xPos >= 8 && fan->xPos <= 13) {
+
+        alvoX = 12;
+        alvoY = 8;
+
+    }
+    else {
+
+        // Quando eles saem da casinha eles adoram suas personalidades
+
+        if (fan->skin == 'F') { // Vermelho: Persegue o Pacman diretamente até ele
+            alvoX = p.xPos;
+            alvoY = p.yPos;
+        }
+
+        else if (fan->skin == 'P') { // Rosa: Tenta ir a 4 casas na frente do Pacman
+            alvoX = p.xPos;
+            alvoY = p.yPos;
+            
+            if (p.dir == 'u') alvoY -= 4; // Se Pacman sobe, alvo está em cima
+            if (p.dir == 'd') alvoY += 4; // Se desce, alvo está em abaixo
+            if (p.dir == 'l') alvoX -= 4;
+            if (p.dir == 'r') alvoX += 4;
+        }
+
+        else if (fan->skin == 'O') { // Laranja: O Medroso
+
+            // Calculando a distância simples (diferença X + diferença Y)
+            int distancia = abs(fan->xPos - p.xPos) + abs(fan->yPos - p.yPos);
+            
+            if (distancia > 8) { // Quando ele estiver longe (> 8 passos), persegue o pac-man
+                alvoX = p.xPos;
+                alvoY = p.yPos;
+            } else { // Quando ele ficar muito perto, foge para o canto favorito dele o esquerdo (1, 21)
+                alvoX = 1;
+                alvoY = ROWS - 2;
+            }
+        }
+        else { // Azul (Inky): Decidi botar ele só pra ir pra algum lugar mesmo usando o Alvo
+
+             // Coloquei o static só pra fazer a variável lembrar de onde estava vindo
+             static int destinoX = 10; 
+             static int destinoY = 10;
+
+             // Sorteia um numero de 0 a 10. Se for 0, ele muda o destino, só pra ele continuar um pouquinho antes de ir pra outro lugar
+             if (rand() % 10 == 0) {
+                 destinoX = rand() % COLS; // Sorteia a coluna 
+                 destinoY = rand() % ROWS; // Sorteia a linha 
+             }
+
+             alvoX = destinoX;
+             alvoY = destinoY;
+        }
+        }
+    
+
+
+    // Um Função para Escolher a melhor direção para chegar no Pac-man
+    mudarDirecao(fan, fm, alvoY, alvoX);
+
+    // Calculando a próxima posição baseando na direção escolhida
+    int proximoX = fan->xPos + fan->xVel;
+    int proximoY = fan->yPos + fan->yVel;
+
+    // Se não for parede, ele se move
+    if (fm[proximoY][proximoX] != '#') {
+        fan->xPos = proximoX;
+        fan->yPos = proximoY;
+    }
+    // Se for uma parede, ele ficará parado esperando a próxima vez ou mudarDirecao vai resolver no próximo frame
+     // Depois só desenha o fantasma na nova posição
     fm[fan->yPos][fan->xPos] = fan->skin;
 }
 
-// Muda a direção para a qual o fantasma está andando
-// kris: Eu prevejo que essa função não vai funcionar adequadamente caso um fantasma entre num beco sem saída.
-// kris: Por enquanto, deixemos assim, MAS... se der merda, é só adicionar uma condição que conta quantos # tem em volta do fantasma, se for 3, ele vira pra trás
-int mudarDirecao(Fantasma *fan, char fm[ROWS][COLS])
+// Função que escolhe a direção que deixa o fantasma mais perto do alvo
+int mudarDirecao(Fantasma *fan, char fm[ROWS][COLS], int alvoY, int alvoX)
 {
-    srand(time(NULL));
+    // Opções de movimento: {y, x} -> Cima, Baixo, Esquerda, Direita
+    int opcoes[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    
+    int melhorDirecaoIndice = -1;
+    int menorDistancia = 9999; // coloca o maior valor possivel
 
-    int n = rand() % 3;
+    // Testa se as 4 direções são possíveis
+    for (int i = 0; i < 4; i++) {
+        int testeY = fan->yPos + opcoes[i][0];
+        int testeX = fan->xPos + opcoes[i][1];
 
-    if (n == 0) // Fantasma vira para a direção oposta
-    {
+        // Só considera se NÃO for parede
+        if (fm[testeY][testeX] != '#') {
+            
+            // O Fantasma não pode dar meia volta de primeira pra não ficar indo e voltando toda hora 
+            // Se ele está indo pra direita (1), não pode ir pra esquerda (-1)
+            if (opcoes[i][0] == -fan->yVel && opcoes[i][1] == -fan->xVel) {
+                continue;
+            }
+
+            // Calculando a distância até o alvo
+            // Diferença na horizontal + diferença na vertical
+            int dist = abs(testeX - alvoX) + abs(testeY - alvoY);
+            
+            // Se a direção for mais perto do alvo que a anterior...
+            if (dist < menorDistancia) {
+                menorDistancia = dist;
+                melhorDirecaoIndice = i; // troca para ser a melhor direção
+            }
+        }
+    }
+
+    // Se encontrou um caminho válido, ele se move até ela
+    if (melhorDirecaoIndice != -1) {
+        fan->yVel = opcoes[melhorDirecaoIndice][0];
+        fan->xVel = opcoes[melhorDirecaoIndice][1];
+    } 
+    else {
+        // Se entrou num beco sem saída (ele dá meia volta)
         fan->xVel *= -1;
         fan->yVel *= -1;
     }
-    else
-    {
-        // Fantasma vira perpendicularmente para um lado...
-        int aux = fan->xVel;
-
-        fan->xVel = fan->yVel;
-        fan->yVel = aux;
-
-        if (n == 2) // ... ou para o outro
-        {
-            fan->xVel *= -1;
-            fan->yVel *= -1;
-        }
-
-        // Verifica se a próxima posição é valida ou não. Se não for, inverte
-        if (fm[fan->yPos + fan->yVel][fan->xPos + fan->xVel] != ' ')
-        {
-            fan->xVel *= -1;
-            fan->yVel *= -1;
-        }
-    }
+    return 0;
 }
