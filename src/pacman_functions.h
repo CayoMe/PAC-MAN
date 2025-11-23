@@ -8,7 +8,7 @@ char getInput();
 void telaInicial();
 void gerarFantasmapa(char[ROWS][COLS], char[ROWS][COLS]);
 void renderGrid(char[ROWS][COLS], char[ROWS][COLS], Player, Fantasma[], int, int *pontos);
-void moverJogador(Player*, int rows, int cols, char[ROWS][COLS], int *pontos);
+void moverJogador(Player*, int rows, int cols, char[ROWS][COLS], char[ROWS][COLS], int *pontos);
 void moverFantasma(Fantasma*, char[ROWS][COLS], Player);
 int mudarDirecao(Fantasma*, char[ROWS][COLS], int, int);
 

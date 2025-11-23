@@ -218,7 +218,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
 }
 
 // Função que move o jogador
-void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], int *pontos)
+void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], char fm[ROWS][COLS], int *pontos)
 {
     char proxMov;
     int pacX = pacman->xPos;
@@ -257,12 +257,17 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], int
         {
             printf("vc acertaria uma parede\n");
         }
-        else if (mapa[pacY + deltaY][pacX + deltaX] == 'F')
+        else if (
+        fm[pacY + deltaY][pacX + deltaX] == 'F' ||
+        fm[pacY + deltaY][pacX + deltaX] == 'P' ||
+        fm[pacY + deltaY][pacX + deltaX] == 'I' ||
+        fm[pacY + deltaY][pacX + deltaX] == 'O'
+)
         {
-            printf("Game Over!!\n");
+            printf("\nGame Over!!\n");
+            printf("\nSua pontuacao: %d\n", (*pontos));
             exit(0);
         }
-
         else
         {
             // -Cayo: caso ele comer uma bolinha, a gente soma um ponto

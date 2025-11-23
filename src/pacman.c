@@ -53,7 +53,7 @@ char* main(void) {
     // Loop principal do jogo
     while (1)
     {
-        moverJogador(&p1, ROWS, COLS, mapa, pontos);
+      moverJogador(&p1, ROWS, COLS, mapa, fantasmapa, pontos);
 
         // Loop para mover TODOS os fantasmas
         for (int i = 0; i < num_fantasmas; i++) {
