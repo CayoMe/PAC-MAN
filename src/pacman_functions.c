@@ -137,7 +137,7 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
 void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
 {
     system("cls");
-    int temCirculos = 0;
+    int temPontos = 0;
 
     // Posicionando o jogador
     m[player.yPos][player.xPos] = 'C';
@@ -152,8 +152,8 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (m[i][j] == '.' && temCirculos == 0){
-                temCirculos = 1;
+            if (m[i][j] == '.' && temPontos == 0){
+                temPontos = 1;
             }
             if (fm[i][j] == ' '){
                 if (m[i][j] == 'C') {
@@ -203,7 +203,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
         printf("\n");
     }
 
-    if (temCirculos == 0) {
+    if (temPontos == 0) {
             system("cls");
             printf("\nParabens, voce venceu!!\n");
             printf("Sua pontuacao: %d\n", (*pontos));
