@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <time.h> // Para gerar seed da função rand()
 
-char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 // Retorna um char representando a seta que o jogador apertou no formato 'u' (up), 'd' (down), 'l' (left), 'r' (right)
 // Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
