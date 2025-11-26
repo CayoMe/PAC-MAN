@@ -39,15 +39,51 @@ char* main(void) {
     // Inicializando player e fantasmas
     gerarFantasmapa(mapa, fantasmapa);
 
-    Player p1 = {9, 15, 'd'}; // Começa olhando para baixo
+    // Inicializando player e fantasmas
+    Player p1 = {0, 0, 'd'}; // Começa olhando para baixo
 
-    // Array dos fantasmas
     Fantasma fantasmas[4] = {
-        {'F', 9, 9, 1, 0},  // Fantasma 1 (vermelho)
-        {'P', 10, 9, 1, 0}, // Fantasma 2 (rosa)
-        {'I', 11, 9, 1, 0},// Fantasma 3 (azul)
-        {'O', 12, 9, 1, 0} // Fantasma 4 (laranja)
+        {'F', 0, 0, 0, 0}, // Fantasma 1 (vermelho)
+        {'P', 0, 0, 0, 0}, // Fantasma 2 (rosa)
+        {'I', 0, 0, 0, 0}, // Fantasma 3 (azul)
+        {'O', 0, 0, 0, 0}  // Fantasma 4 (laranja)
     };
+
+    // Abrindo save file
+    FILE *save = fopen("../assets/savefile.txt", "r");
+    if (save == NULL)
+    {
+        printf("no save file!\n");
+    }
+
+    char buffer[20];
+    int esseFan = 0; // Contador para acessar cada fantasma do array
+
+    while(fgets(buffer, sizeof(buffer), save) != NULL)
+    {
+        // Se a linha for a primeira, a linha do Pacman...
+        if (buffer[0] == 'p')
+        {
+            // Altera x e y do Pacman
+            sscanf(buffer, "p,%i,%i", p1.xPos, p1.yPos);
+        }
+        else
+        {
+            // Altera as coordenadas e velocidade do fantasma
+            sscanf("%i,%i,%i,%i",
+                fantasmas[esseFan].xPos,
+                fantasmas[esseFan].yPos,
+                fantasmas[esseFan].xVel,
+                fantasmas[esseFan].yVel
+            );
+
+            // Vai para o próximo fantasma
+            esseFan++;
+        }
+    }
+
+    fclose(save);
+    
     int num_fantasmas = 4;
 
     // Loop principal do jogo
