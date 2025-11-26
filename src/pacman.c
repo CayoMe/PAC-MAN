@@ -91,7 +91,12 @@ char* main(void) {
     // Loop principal do jogo
     while (1)
     {
-      moverJogador(&p1, ROWS, COLS, mapa, fantasmapa, pontos);
+        char input = moverJogador(&p1, ROWS, COLS, mapa, fantasmapa, pontos);
+      
+        if (input == 83 || input == 115) // S ou s
+        { 
+            saveGame(p1, fantasmas); // CONTINUE
+        }
 
         // Loop para mover TODOS os fantasmas
         for (int i = 0; i < num_fantasmas; i++) {

@@ -6,6 +6,22 @@
 #include <time.h> // Para gerar seed da função rand()
 
 
+void saveGame(Player p, Fantasma fantasmas[])
+{
+    FILE *savefile = fopen("../assets/savefile.txt", "w");
+
+    fprintf(savefile,"p,%i,%i\n%i,%i,%i,%i\n%i,%i,%i,%i\n%i,%i,%i,%i\n%i,%i,%i,%i",
+        p.xPos, p.yPos,
+        fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel,
+        fantasmas[1].xPos, fantasmas[1].yPos, fantasmas[1].xVel, fantasmas[1].yVel,
+        fantasmas[2].xPos, fantasmas[2].yPos, fantasmas[2].xVel, fantasmas[2].yVel,
+        fantasmas[3].xPos, fantasmas[3].yPos, fantasmas[3].xVel, fantasmas[3].yVel
+    );
+
+    fclose(savefile);
+}
+
+
 // Retorna um char representando a seta que o jogador apertou no formato 'u' (up), 'd' (down), 'l' (left), 'r' (right)
 // Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
 char getInput()
@@ -42,7 +58,7 @@ char getInput()
                 break;
             }
         }
-        else if (input == 113)
+        else if (input == 81 || input == 113) // Q ou q
         {
             exit(0); // Fecha o programa
         }
@@ -218,7 +234,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
 }
 
 // Função que move o jogador
-void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], char fm[ROWS][COLS], int *pontos)
+char moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], char fm[ROWS][COLS], int *pontos)
 {
     char proxMov;
     int pacX = pacman->xPos;
@@ -286,6 +302,8 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], cha
             break;
         }
     }
+
+    return proxMov;
 }
 
 void moverFantasma(Fantasma *fan, char fm[ROWS][COLS], Player p)
