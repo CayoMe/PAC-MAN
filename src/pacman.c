@@ -70,11 +70,11 @@ char* main(void) {
         else
         {
             // Altera as coordenadas e velocidade do fantasma
-            sscanf("%i,%i,%i,%i",
-                fantasmas[esseFan].xPos,
-                fantasmas[esseFan].yPos,
-                fantasmas[esseFan].xVel,
-                fantasmas[esseFan].yVel
+            sscanf(buffer, "%d,%d,%d,%d",
+                &fantasmas[esseFan].xPos,
+                &fantasmas[esseFan].yPos,
+                &fantasmas[esseFan].xVel,
+                &fantasmas[esseFan].yVel
             );
 
             // Vai para o próximo fantasma
