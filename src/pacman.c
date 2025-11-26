@@ -31,8 +31,8 @@ char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 
 char* main(void) {
-
-    telaInicial();
+    // !!! Não está funcionando
+    // telaInicial();
     int p = 0;
     int *pontos = &p; // pontuação 
 
@@ -65,7 +65,7 @@ char* main(void) {
         if (buffer[0] == 'p')
         {
             // Altera x e y do Pacman
-            sscanf(buffer, "p,%i,%i", p1.xPos, p1.yPos);
+            sscanf(buffer, "p,%i,%i", &p1.xPos, &p1.yPos);
         }
         else
         {
@@ -85,6 +85,8 @@ char* main(void) {
     fclose(save);
     
     int num_fantasmas = 4;
+
+    renderGrid(mapa, fantasmapa, p1, fantasmas, num_fantasmas, pontos);
 
     // Loop principal do jogo
     while (1)

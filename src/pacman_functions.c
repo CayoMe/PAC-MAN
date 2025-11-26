@@ -136,6 +136,7 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
 void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
 {
     system("cls");
+    printf("pac x: %i pac y: %i\n", player.xPos, player.yPos);
     int temPontos = 0;
 
     // Posicionando o jogador
@@ -159,7 +160,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                     printf("\033[1;33m%c\033[0m", m[i][j]); // Pac-Man amarelo
                 }
                 else if (m[i][j] == '#') {
-                    printf("\u2588");
+                    printf("(");
                 }
                 else {
                     printf("%c", m[i][j]);
@@ -187,7 +188,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                     }
                 }
                 else if (fm[i][j] == '#') {
-                    printf("\u2588");
+                    printf("#");
                 }
                 else{
                     printf("%c", fm[i][j]);
