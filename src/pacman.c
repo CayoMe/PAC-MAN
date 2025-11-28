@@ -31,8 +31,7 @@ char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 
 char* main(void) {
-    // !!! Não está funcionando
-    // telaInicial();
+    telaInicial();
     int p = 0;
     int *pontos = &p; // pontuação 
 

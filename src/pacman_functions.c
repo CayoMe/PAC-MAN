@@ -152,7 +152,7 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
 void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
 {
     system("cls");
-    printf("pac x: %i pac y: %i\n", player.xPos, player.yPos);
+    // printf("pac x: %i pac y: %i\n", player.xPos, player.yPos); //DEBUG posição do Pacman 
     int temPontos = 0;
 
     // Posicionando o jogador
@@ -176,7 +176,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                     printf("\033[1;33m%c\033[0m", m[i][j]); // Pac-Man amarelo
                 }
                 else if (m[i][j] == '#') {
-                    printf("(");
+                    printf("\u2588");
                 }
                 else {
                     printf("%c", m[i][j]);
@@ -204,19 +204,19 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                     }
                 }
                 else if (fm[i][j] == '#') {
-                    printf("#");
+                    printf("\u2588");
                 }
                 else{
                     printf("%c", fm[i][j]);
                 }
             }
         }
-        printf("|");                   // DEBUG 02
-        for (int k = 0; k < COLS; k++) // DEBUG 02
-        {                              // DEBUG 02
-            printf("%c", fm[i][k]);    // DEBUG 02
-        } // DEBUG 02
-        printf("\n");
+        // printf("|");                   // DEBUG 02
+        // for (int k = 0; k < COLS; k++) // DEBUG 02
+        // {                              // DEBUG 02
+        //     printf("%c", fm[i][k]);    // DEBUG 02
+        // } // DEBUG 02
+         printf("\n");
     }
 
     if (temPontos == 0) {
@@ -226,11 +226,11 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
             exit(0);
         }
 
-    // DEBUG 01 Mudei pra pegar só o primeiro fantasma
-    int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;
-    int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                                                                           // DEBUG 01
-    printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
-    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
+    // // DEBUG 01 Mudei pra pegar só o primeiro fantasma
+    // int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;
+    // int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                                                                           // DEBUG 01
+    // printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
+    // printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
 
 // Função que move o jogador
