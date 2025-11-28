@@ -377,7 +377,7 @@ char moverJogador(Player *pacman, Fantasma fantasmas[], int rows, int cols, char
         // Verificando a validade do movimento (parede '#' => nada acontece; fantasma 'F' => jogo encerra)
         if (mapa[pacY + deltaY][pacX + deltaX] == '#')
         {
-            printf("Plof ! Voce acertou uma parede!\n");
+            printf("                Plof ! Voce acertou uma parede!\n");
         }
         else if (
         fm[pacY + deltaY][pacX + deltaX] == 'F' ||
