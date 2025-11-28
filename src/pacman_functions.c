@@ -276,22 +276,24 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player *player, Fantasm
         // for (int k = 0; k < COLS; k++) // DEBUG 02
         // {                              // DEBUG 02
         //     printf("%c", fm[i][k]);    // DEBUG 02
-        // } // DEBUG 02
-         printf("\n");
+        // }                              // DEBUG 02
+        printf("\n");
     }
 
-    if (temPontos == 0) {
-            system("cls");
-            printf("\nParabens, voce venceu!!\n");
-            printf("Sua pontuacao: %d\n", (*pontos));
-            exit(0);
-        }
+    printf("↑↓←→ mover, [Q] sair, [S]alvar\n");
 
-    // // DEBUG 01 Mudei pra pegar só o primeiro fantasma
-    // int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;
-    // int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                                                                           // DEBUG 01
-    // printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
-    // printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
+    if (temPontos == 0)
+    {
+        system("cls");
+        printf("\nParabens, voce venceu!!\n");
+        printf("Sua pontuacao: %d\n", (*pontos));
+        exit(0);
+    }
+    // int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;                                              // DEBUG 01 Mudei pra pegar só o primeiro fantasma   
+    // int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                              // DEBUG 01
+    // printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                              // DEBUG 01
+    // printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n",                                // DEBUG 01
+    // fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
 
 // Função que move o jogador
