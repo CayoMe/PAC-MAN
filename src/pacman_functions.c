@@ -208,6 +208,7 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
 void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player *player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
 {
     system("cls");
+    system("mode con: cols=60 lines=40");
     // printf("pac x: %i pac y: %i\n", player->xPos, player->yPos); //DEBUG posição do Pacman 
     int temPontos = 0;
 
@@ -222,6 +223,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player *player, Fantasm
     // Printa na tela o valor de cada coordenada do mapa, priorizando sempre os valores da camada dos fantasmas
     for (int i = 0; i < ROWS; i++)
     {
+        printf("                   ");
         for (int j = 0; j < COLS; j++)
         {
             if (m[i][j] == '.' && temPontos == 0){
@@ -280,7 +282,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player *player, Fantasm
         printf("\n");
     }
 
-    printf("↑↓←→ mover, [Q] sair, [S]alvar\n");
+    printf("                ↑↓←→ mover, [Q] sair, [S]alvar\n");
 
     if (temPontos == 0)
     {
