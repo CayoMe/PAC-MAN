@@ -110,6 +110,7 @@ Estas linhas servem como algumas ferramentas visuais que podem ser utilizadas pa
 - [Cheatsheet do C](https://manual.cs50.io/)
 - [Playsound](https://learn.microsoft.com/pt-pt/previous-versions//dd743680(v=vs.85))
 - [`conio.h`](https://code-reference.com/c/conio.h)
+- [Fantasmas e suas personalidades](https://www.quora.com/What-are-the-different-gameplay-of-the-ghosts-in-the-classic-80s-video-game-Pac-Man)
 
 
-> *paCman é um jogo feito com muito amor (e uso consciente de IA) por 5 estudantes do curso de Ciência da Computação.*
+> *paCman foi um jogo feito com muito amor (e uso quase nulo de IA, sendo usada como referência aos compiladores de C / CMD) por 5 estudantes do curso de Ciência da Computação.*
