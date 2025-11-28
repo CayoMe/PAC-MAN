@@ -3,6 +3,30 @@
 #include <time.h>
 #include <stdio.h>
 
+const char MAPA_ORIGINAL[ROWS][COLS] = {
+    {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+    {'#','o','.','.','.','.','.','.','.','.','#','#','.','.','.','.','.','.','.','.','o','#'},
+    {'#','.','#','#','.','#','#','#','#','.','#','#','.','#','#','#','#','.','#','#','.','#'},
+    {'#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
+    {'#','.','#','#','.','#','.','#','#','#','#','#','#','#','#','.','#','.','#','#','.','#'},
+    {'#','.','.','.','.','#','.','.','.','.','#','#','.','.','.','.','#','.','.','.','.','#'},
+    {'#','#','#','#','.','#','#','#','#',' ','#','#',' ','#','#','#','#','.','#','#','#','#'},
+    {'#','#','#','#','.','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','.','#','#','#','#'},
+    {'#','#','#','#','.','#',' ','#','#','#','_','_','#','#','#',' ','#','.','#','#','#','#'},
+    {'#','.','.','.','.',' ',' ','#',' ',' ',' ',' ',' ',' ','#',' ',' ','.','.','.','.','#'},
+    {'#','#','#','#','.','#',' ','#','#','#','#','#','#','#','#',' ','#','.','#','#','#','#'},
+    {'#','#','#','#','.','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','.','#','#','#','#'},
+    {'#','#','#','#','.','#',' ','#','#','#','#','#','#','#','#','.','#','.','#','#','#','#'},
+    {'#','.','.','.','.','.','.','.','.','.','#','#','.','.','.','.',' ','.','.','.','.','#'},
+    {'#','.','#','#','.','#','#','#','#','.','#','#','.','#','#','#','#','.','#','#','.','#'},
+    {'#','o','.','#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#','.','o','#'},
+    {'#','#','.','#','.','#','.','#','#','#','#','#','#','#','#','.','#','.','#','.','#','#'},
+    {'#','.','.','.','.','#','.','.','.','.','#','#','.','.','.','.','#','.','.','.','.','#'},
+    {'#','.','#','#','#','#','#','#','#','.','#','#','.','#','#','#','#','#','#','#','.','#'},
+    {'#','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','#'},
+    {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'}
+};
+
 char mapa[ROWS][COLS] = {
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
     {'#','o','.','.','.','.','.','.','.','.','#','#','.','.','.','.','.','.','.','.','o','#'},
@@ -32,6 +56,8 @@ char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 char* main(void) {
 
+    char mapa[ROWS][COLS];
+    carregarMapa(mapa);
     telaInicial();
     int p = 0;
     int *pontos = &p; // pontuação 
@@ -39,21 +65,59 @@ char* main(void) {
     // Inicializando player e fantasmas
     gerarFantasmapa(mapa, fantasmapa);
 
-    Player p1 = {9, 15, 'd'}; // Começa olhando para baixo
+    // Inicializando player e fantasmas
+    Player p1 = {pacman_inicial_x, pacman_inicial_y, 'd'}; // Usando a posição do #define para não dar erros no carregamento do savefile
 
-    // Array dos fantasmas
     Fantasma fantasmas[4] = {
-        {'F', 9, 9, 1, 0},  // Fantasma 1 (vermelho)
-        {'P', 10, 9, 1, 0}, // Fantasma 2 (rosa)
-        {'I', 11, 9, 1, 0},// Fantasma 3 (azul)
-        {'O', 12, 9, 1, 0} // Fantasma 4 (laranja)
+        {'F', 0, 0, 0, 0}, // Fantasma 1 (vermelho)
+        {'P', 0, 0, 0, 0}, // Fantasma 2 (rosa)
+        {'I', 0, 0, 0, 0}, // Fantasma 3 (azul)
+        {'O', 0, 0, 0, 0}  // Fantasma 4 (laranja)
     };
+
+    // Abrindo save file
+    FILE *save = fopen("../assets/savefile.txt", "r");
+    if (save == NULL)
+    {
+        printf("no save file!\n");
+    }
+
+    char buffer[20];
+    int esseFan = 0; // Contador para acessar cada fantasma do array
+
+    while(fgets(buffer, sizeof(buffer), save) != NULL)
+    {
+        // Se a linha for a primeira, a linha do Pacman...
+        if (buffer[0] == 'p')
+        {
+            // Altera x e y do Pacman
+            sscanf(buffer, "p,%i,%i", &p1.xPos, &p1.yPos);
+        }
+        else
+        {
+            // Altera as coordenadas e velocidade do fantasma
+            sscanf(buffer, "%d,%d,%d,%d",
+                &fantasmas[esseFan].xPos,
+                &fantasmas[esseFan].yPos,
+                &fantasmas[esseFan].xVel,
+                &fantasmas[esseFan].yVel
+            );
+
+            // Vai para o próximo fantasma
+            esseFan++;
+        }
+    }
+
+    fclose(save);
+    
     int num_fantasmas = 4;
+
+    renderGrid(mapa, fantasmapa, &p1, fantasmas, num_fantasmas, pontos);
 
     // Loop principal do jogo
     while (1)
     {
-      moverJogador(&p1, ROWS, COLS, mapa, fantasmapa, pontos);
+        char input = moverJogador(&p1, fantasmas, ROWS, COLS, mapa, fantasmapa, pontos);
 
         // Loop para mover TODOS os fantasmas
         for (int i = 0; i < num_fantasmas; i++) {
@@ -61,7 +125,7 @@ char* main(void) {
         }
 
         // Renderiza tudo para criar o frame
-        renderGrid(mapa, fantasmapa, p1, fantasmas, num_fantasmas, pontos);
+        renderGrid(mapa, fantasmapa, &p1, fantasmas, num_fantasmas, pontos);
     }
 
     return "🥴";

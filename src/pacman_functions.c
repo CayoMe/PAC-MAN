@@ -5,7 +5,74 @@
 #include <stdlib.h>
 #include <time.h> // Para gerar seed da função rand()
 
-char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
+
+// Função que irá salvar o jogo
+void saveGame(Player p, Fantasma f[])
+{
+
+    FILE *file = fopen("../assets/savefile.txt", "w"); 
+    
+    if (file == NULL)
+    {
+        printf("Erro ao salvar o jogo!\n");
+        return;
+    }
+
+    // Salva o Pacman como as posições p,x,y
+    fprintf(file, "p,%d,%d\n", p.xPos, p.yPos);
+
+    // E os 4 Fantasmas no usando as posições e velocidades como x,y,vx,vy
+    for (int i = 0; i < 4; i++)
+    {
+        fprintf(file, "%d,%d,%d,%d\n", f[i].xPos, f[i].yPos, f[i].xVel, f[i].yVel);
+    }
+
+    fclose(file);
+}
+
+// extern pra fazer o compilador entender que existe uma variavel chamada MAPA_ORIGINAL em outro arquivo, e usar ela
+extern const char MAPA_ORIGINAL[ROWS][COLS];
+
+// Função para carregar o mapa
+void carregarMapa(char mapa[ROWS][COLS]) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            // Copia o original que vai estar no pacman.c para o mapa do jogo atual
+            mapa[i][j] = MAPA_ORIGINAL[i][j];
+        }
+    }
+}
+
+// Função que vai resetar o jogo ao perder
+void reiniciarJogo(Player *p, Fantasma f[], char mapa[ROWS][COLS])
+{
+    carregarMapa(mapa);
+
+    // Reseta o Pacman usando as #define que criei
+    p->xPos = pacman_inicial_x;
+    p->yPos = pacman_inicial_y;
+    p->dir = 'd';
+
+    // Reseta os fantasma um por um mesmo
+    
+    // Fantasma F
+    f[0].xPos = 9; f[0].yPos = 9; 
+    f[0].xVel = 1; f[0].yVel = 0;
+
+    // Fantasma P
+    f[1].xPos = 10; f[1].yPos = 9;
+    f[1].xVel = 1; f[1].yVel = 0;
+
+    // Fantasma I
+    f[2].xPos = 11; f[2].yPos = 9;
+    f[2].xVel = 1; f[2].yVel = 0;
+
+    // Fantasma O
+    f[3].xPos = 12; f[3].yPos = 9;
+    f[3].xVel = 1; f[3].yVel = 0;
+
+}
+
 
 // Retorna um char representando a seta que o jogador apertou no formato 'u' (up), 'd' (down), 'l' (left), 'r' (right)
 // Não retorna nada caso o usuário entre com qualquer tecla que não seja uma setinha
@@ -43,9 +110,13 @@ char getInput()
                 break;
             }
         }
-        else if (input == 113)
+        else if (input == 81 || input == 113) // Q ou q
         {
             exit(0); // Fecha o programa
+        }
+        else if (input == 83 || input == 115) // S ou s
+        {
+            output = input; // Salva o programa
         }
     }
 
@@ -134,13 +205,14 @@ void gerarFantasmapa(char s[ROWS][COLS], char d[ROWS][COLS])
     }
 }
 
-void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
+void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player *player, Fantasma fantasmas[], int num_fantasmas, int *pontos)
 {
     system("cls");
+    // printf("pac x: %i pac y: %i\n", player->xPos, player->yPos); //DEBUG posição do Pacman 
     int temPontos = 0;
 
     // Posicionando o jogador
-    m[player.yPos][player.xPos] = 'C';
+    m[player->yPos][player->xPos] = 'C';
     
     // Posiciona TODOS os fantasmas no fantasmapa
     for (int i = 0; i < num_fantasmas; i++) {
@@ -181,10 +253,15 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
 
                     // Verificando se vai colidir com algo
                     if (m[i][j] == 'C'){ 
-                        system("cls");
                         printf("\nGame Over!!\n");
                         printf("Sua pontuacao: %d\n", (*pontos));
-                        exit(0);
+                        printf("\nPressione qualquer tecla para reiniciar...");
+                        getch();
+                        m[player->yPos][player->xPos] = ' ';
+                        gerarFantasmapa(m, fm);
+                        reiniciarJogo(player, fantasmas, m);
+                        *pontos = 0;
+                        return;
                     }
                 }
                 else if (fm[i][j] == '#') {
@@ -195,12 +272,12 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
                 }
             }
         }
-        printf("|");                   // DEBUG 02
-        for (int k = 0; k < COLS; k++) // DEBUG 02
-        {                              // DEBUG 02
-            printf("%c", fm[i][k]);    // DEBUG 02
-        } // DEBUG 02
-        printf("\n");
+        // printf("|");                   // DEBUG 02
+        // for (int k = 0; k < COLS; k++) // DEBUG 02
+        // {                              // DEBUG 02
+        //     printf("%c", fm[i][k]);    // DEBUG 02
+        // } // DEBUG 02
+         printf("\n");
     }
 
     if (temPontos == 0) {
@@ -210,15 +287,15 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player player, Fantasma
             exit(0);
         }
 
-    // DEBUG 01 Mudei pra pegar só o primeiro fantasma
-    int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;
-    int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                                                                           // DEBUG 01
-    printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
-    printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
+    // // DEBUG 01 Mudei pra pegar só o primeiro fantasma
+    // int xAhead = fantasmas[0].xPos + fantasmas[0].xVel;
+    // int yAhead = fantasmas[0].yPos + fantasmas[0].yVel;                                                                                           // DEBUG 01
+    // printf("yAhead: %i, xAhead: %i\n", yAhead, xAhead);                                                                        // DEBUG 01
+    // printf("fan: xPos: %i, yPos: %i, xVel: %i, yVel: %i, sees: %c\n", fantasmas[0].xPos, fantasmas[0].yPos, fantasmas[0].xVel, fantasmas[0].yVel, fm[yAhead][xAhead]); // DEBUG 01
 }
 
 // Função que move o jogador
-void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], char fm[ROWS][COLS], int *pontos)
+char moverJogador(Player *pacman, Fantasma fantasmas[], int rows, int cols, char mapa[ROWS][COLS], char fm[ROWS][COLS], int *pontos)
 {
     char proxMov;
     int pacX = pacman->xPos;
@@ -246,6 +323,11 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], cha
             pacman->dir = 'd';
             deltaY++;
         }
+        else if (proxMov == 's' || proxMov == 'S') {
+            saveGame(*pacman, fantasmas);
+            printf("Jogo salvo!\n");
+            continue; 
+        }
         else // Talvez não precise dessa parte
         {
             printf("movimento inválido!\n");
@@ -266,7 +348,13 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], cha
         {
             printf("\nGame Over!!\n");
             printf("\nSua pontuacao: %d\n", (*pontos));
-            exit(0);
+            printf("\nPressione qualquer tecla para reiniciar...");
+            getch();
+            mapa[pacY][pacX] = ' '; 
+            gerarFantasmapa(mapa, fm);
+            reiniciarJogo(pacman, fantasmas, mapa);
+            *pontos = 0;
+            return ' ';
         }
         else
         {
@@ -286,6 +374,8 @@ void moverJogador(Player *pacman, int rows, int cols, char mapa[ROWS][COLS], cha
             break;
         }
     }
+
+    return proxMov;
 }
 
 void moverFantasma(Fantasma *fan, char fm[ROWS][COLS], Player p)
