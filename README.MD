@@ -1,10 +1,9 @@
 # paCman, um Pacman em C
 
-O jogo, rodando estritamente no console, funciona a partir de um loop localizado no `int main()` do documento principal, que ocorre logo após alguns preparos do cenário e a renderização do cenário em si.
+O jogo, rodando *estritamente* no console, funciona a partir de um loop localizado no `int main()` do documento `pacman.c`, que ocorre logo após a exibição da tela inicial e alguns preparos 
 
 **Este loop consiste em 4 funções principais:**
-- [`makeMove()`](#makemove): recebe uma entrada do usuário. Podem ser setas para movimentar o Pacman ou letras para algumas funções básicas como encerrar ou reiniciar.
-- [`moverFantasma()`](#moverfantasma): move o fantasma de acordo com a sua velocidade, armazenada no `struct` *"Fantasma"*. Será trocada pela função `moverFantasmas()` quando terminarmos a lógica do fantasma.
+- [`moverFantasma()`](#moverfantasma): move o fantasma para a próxima casa de acordo com a sua velocidade, armazenada no `struct` *"Fantasma"*. Expressa também as "personalidades" dos fantasmas através da atribuição de *alvos*. Um alvo é uma coordenada a que o fantasma tentará se mover. O alvo varia de fantasma pra fantasma, o vermelho (<span style="color:red">F</span>)
 - [`checkWin()`](#checkwin): verifica algumas condições para encerrar o jogo. Se o Pacman tiver comido todas as bolinhas, o jogador vence. Se o Pacman estiver na mesma coordenada que um fantasma, Game Over.
 - [`renderGrid()`](#rendergrid): busca as informações do mapa após todas as movimentações e printa no console cada uma das células do mapa.
 ---
