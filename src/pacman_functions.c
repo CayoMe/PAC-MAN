@@ -14,7 +14,7 @@ void saveGame(Player p, Fantasma f[])
     
     if (file == NULL)
     {
-        printf("Erro ao salvar o jogo!\n");
+        printf("Erro ao tentar salvar o jogo!\n");
         return;
     }
 
@@ -37,7 +37,7 @@ extern const char MAPA_ORIGINAL[ROWS][COLS];
 void carregarMapa(char mapa[ROWS][COLS]) {
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
-            // Copia o original que vai estar no pacman.c para o mapa do jogo atual
+            // Copia o mapa original que vai estar no pacman.c para o mapa do jogo atual
             mapa[i][j] = MAPA_ORIGINAL[i][j];
         }
     }
@@ -88,7 +88,7 @@ char getInput()
         {
             input = getch(); // Ela tem que ser chamada duas vezes pra alguns tipos de teclas, como as setinhas
 
-            switch (input) // TODO: criar mais teclas de controle, como [r]einiciar, [s]air, etc.
+            switch (input)
             {
             case 72:
                 output = 'u';
@@ -125,7 +125,7 @@ char getInput()
 
 void telaInicial()
 {
-    system("mode con: cols=300 lines=100"); // só pra deixar a arte certinha sem quebrar no cmd
+    system("mode con: cols=300 lines=100"); // Define um escala só pra deixar a arte certinha sem quebrar no cmd
     #ifdef _WIN32
         system("chcp 65001 > nul"); 
     #endif
@@ -234,7 +234,7 @@ void renderGrid(char m[ROWS][COLS], char fm[ROWS][COLS], Player *player, Fantasm
                     printf("\033[1;33m%c\033[0m", m[i][j]); // Pac-Man amarelo
                 }
                 else if (m[i][j] == '#') {
-                    printf("\u2588");
+                    printf("\u2588");   //Barrinha que preenche o mapa no lugar do #
                 }
                 else {
                     printf("%c", m[i][j]);
@@ -368,7 +368,7 @@ char moverJogador(Player *pacman, Fantasma fantasmas[], int rows, int cols, char
             printf("Jogo salvo!\n");
             continue; 
         }
-        else // Talvez não precise dessa parte
+        else
         {
             printf("movimento inválido!\n");
             break;
@@ -377,7 +377,7 @@ char moverJogador(Player *pacman, Fantasma fantasmas[], int rows, int cols, char
         // Verificando a validade do movimento (parede '#' => nada acontece; fantasma 'F' => jogo encerra)
         if (mapa[pacY + deltaY][pacX + deltaX] == '#')
         {
-            printf("vc acertaria uma parede\n");
+            printf("Plof ! Voce acertou uma parede!\n");
         }
         else if (
         fm[pacY + deltaY][pacX + deltaX] == 'F' ||
@@ -434,7 +434,7 @@ char moverJogador(Player *pacman, Fantasma fantasmas[], int rows, int cols, char
         }
         else
         {
-            // -Cayo: caso ele comer uma bolinha, a gente soma um ponto
+            // Caso ele comer uma bolinha, a gente soma um ponto
             if (mapa[pacY + deltaY][pacX + deltaX] == '.')
             {
                 (*pontos)++;
@@ -472,14 +472,14 @@ void moverFantasma(Fantasma *fan, char fm[ROWS][COLS], Player p)
     }
     else {
 
-        // Quando eles saem da casinha eles adoram suas personalidades
+        // Quando eles saem da casinha eles adotam suas personalidades
 
-        if (fan->skin == 'F') { // Vermelho: Persegue o Pacman diretamente até ele
+        if (fan->skin == 'F') { // Vermelho(Blinky): Que persegue o Pacman diretamente
             alvoX = p.xPos;
             alvoY = p.yPos;
         }
 
-        else if (fan->skin == 'P') { // Rosa: Tenta ir a 4 casas na frente do Pacman
+        else if (fan->skin == 'P') { // Rosa(Pinky): Tenta ir a 4 casas na frente do Pacman
             alvoX = p.xPos;
             alvoY = p.yPos;
             
@@ -489,7 +489,7 @@ void moverFantasma(Fantasma *fan, char fm[ROWS][COLS], Player p)
             if (p.dir == 'r') alvoX += 4;
         }
 
-        else if (fan->skin == 'O') { // Laranja: O Medroso
+        else if (fan->skin == 'O') { // Laranja(Clyde): O Medroso
 
             // Calculando a distância simples (diferença X + diferença Y)
             int distancia = abs(fan->xPos - p.xPos) + abs(fan->yPos - p.yPos);
