@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
+#include <windows.h>// Para aceitar o TEXT
+#include <mmsystem.h>//Biblioteca para poder colocar o Som do Jogo
 
 const char MAPA_ORIGINAL[ROWS][COLS] = {
     {'#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
@@ -55,6 +57,21 @@ char fantasmapa[ROWS][COLS]; // Mapa dos fantasmas
 
 
 char* main(void) {
+
+    //Musiquinha do Games
+    // Colocando o som do jogo em 50% do volume para ficar show
+    DWORD volume = 0x80008000; 
+    // Como precisa colocar para os dois lados do ouvido o esquerdo e direito
+    // fica 0x8000-8000 = 50% de volume nos dois. conforme a documentação
+
+    //Coloca para a saida de audio ser a sua atual do computador, a padrão
+    waveOutSetVolume(0, volume);
+
+    //Toca a Musiquinha do Games
+    PlaySound(TEXT("..\\assets\\som.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
+    //Os parametros que usei foram o SND_FILENAME para dizer que estamos passando um arquivo
+    // O SND_ASYNC para ele tocar sem travar o programa
+    // E o SND_LOOP para ele ficar tocando em loop até mandarmos parar
 
     char mapa[ROWS][COLS];
     carregarMapa(mapa);
